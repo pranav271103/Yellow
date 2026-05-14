@@ -9,7 +9,7 @@ import { CommandResponse, isTauri } from './common';
 /**
  * Exchange a login token for a session token
  */
-export async function exchangeToken(
+export async function yellowExchangeToken(
   backendUrl: string,
   token: string
 ): Promise<{ sessionToken: string; user: object }> {
@@ -23,7 +23,7 @@ export async function exchangeToken(
 /**
  * Get the current authentication state from Rust
  */
-export async function getAuthState(): Promise<{ is_authenticated: boolean; user: object | null }> {
+export async function yellowGetAuthState(): Promise<{ is_authenticated: boolean; user: object | null }> {
   if (!isTauri()) {
     return { is_authenticated: false, user: null };
   }
@@ -38,7 +38,7 @@ export async function getAuthState(): Promise<{ is_authenticated: boolean; user:
 /**
  * Get the session token from secure storage
  */
-export async function getSessionToken(): Promise<string | null> {
+export async function yellowGetSessionToken(): Promise<string | null> {
   if (!isTauri()) {
     return null;
   }
@@ -52,7 +52,7 @@ export async function getSessionToken(): Promise<string | null> {
 /**
  * Logout and clear session
  */
-export async function logout(): Promise<void> {
+export async function yellowLogout(): Promise<void> {
   if (!isTauri()) {
     return;
   }
@@ -63,7 +63,7 @@ export async function logout(): Promise<void> {
 /**
  * Store session in secure storage
  */
-export async function storeSession(token: string, user: object): Promise<void> {
+export async function yellowStoreSession(token: string, user: object): Promise<void> {
   if (!isTauri()) {
     return;
   }
@@ -71,7 +71,7 @@ export async function storeSession(token: string, user: object): Promise<void> {
   await callCoreRpc({ method: 'yellow.auth_store_session', params: { token, user } });
 }
 
-export async function YellowEncryptSecret(plaintext: string): Promise<CommandResponse<string>> {
+export async function yellowEncryptSecret(plaintext: string): Promise<CommandResponse<string>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -81,7 +81,7 @@ export async function YellowEncryptSecret(plaintext: string): Promise<CommandRes
   });
 }
 
-export async function YellowDecryptSecret(ciphertext: string): Promise<CommandResponse<string>> {
+export async function yellowDecryptSecret(ciphertext: string): Promise<CommandResponse<string>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
