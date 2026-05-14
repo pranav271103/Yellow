@@ -110,9 +110,8 @@ export const DEV_JWT_TOKEN = import.meta.env.DEV
 
 export const APP_VERSION = packageJson.version;
 
-/**
- * Deployment environment reported to Sentry and other observability surfaces.
- *
+export const ENVIRONMENT = import.meta.env.DEV
+  ? 'development'
   : APP_ENV === 'staging'
     ? 'staging'
     : 'production';
