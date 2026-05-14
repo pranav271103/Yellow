@@ -79,27 +79,27 @@ export interface GraphRelation {
 /**
  * Initialise the local-only (SQLite) memory subsystem in the Rust core.
  */
-export async function syncMemoryClientToken(token: string): Promise<void> {
+export async function yellowSyncMemoryClientToken(token: string): Promise<void> {
   console.debug(
-    '[memory] syncMemoryClientToken: entry (token_present=%s, is_tauri=%s)',
+    '[memory] yellowSyncMemoryClientToken: entry (token_present=%s, is_tauri=%s)',
     !!token,
     isTauri()
   );
   if (!isTauri()) {
-    console.debug('[memory] syncMemoryClientToken: exit — skipped (not Tauri)');
+    console.debug('[memory] yellowSyncMemoryClientToken: exit — skipped (not Tauri)');
     return;
   }
   try {
-    console.debug('[memory] syncMemoryClientToken: payload → memory.init (local-only)');
+    console.debug('[memory] yellowSyncMemoryClientToken: payload → memory.init (local-only)');
     // jwt_token is passed for backward compatibility but ignored by the core.
     await callCoreRpc<boolean>({ method: 'yellow.memory_init', params: { jwt_token: token } });
-    console.info('[memory] syncMemoryClientToken: exit — ok');
+    console.info('[memory] yellowSyncMemoryClientToken: exit — ok');
   } catch (err) {
-    console.warn('[memory] syncMemoryClientToken: exit — error:', err);
+    console.warn('[memory] yellowSyncMemoryClientToken: exit — error:', err);
   }
 }
 
-export async function memoryListDocuments(namespace?: string): Promise<unknown> {
+export async function yellowMemoryListDocuments(namespace?: string): Promise<unknown> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -114,7 +114,7 @@ export async function memoryListDocuments(namespace?: string): Promise<unknown> 
   return resp;
 }
 
-export async function memoryListNamespaces(): Promise<string[]> {
+export async function yellowMemoryListNamespaces(): Promise<string[]> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -129,7 +129,7 @@ export async function memoryListNamespaces(): Promise<string[]> {
   return [];
 }
 
-export async function memoryDeleteDocument(
+export async function yellowMemoryDeleteDocument(
   documentId: string,
   namespace: string
 ): Promise<unknown> {
@@ -142,7 +142,7 @@ export async function memoryDeleteDocument(
   });
 }
 
-export async function memoryClearNamespace(
+export async function yellowMemoryClearNamespace(
   namespace: string
 ): Promise<{ cleared: boolean; namespace: string }> {
   if (!isTauri()) {
@@ -155,7 +155,7 @@ export async function memoryClearNamespace(
   return response.result;
 }
 
-export async function memoryQueryNamespace(
+export async function yellowMemoryQueryNamespace(
   namespace: string,
   query: string,
   maxChunks?: number
@@ -170,7 +170,7 @@ export async function memoryQueryNamespace(
   return unwrapMemoryQueryResult(resp);
 }
 
-export async function memoryRecallNamespace(
+export async function yellowMemoryRecallNamespace(
   namespace: string,
   maxChunks?: number
 ): Promise<MemoryQueryResult> {
@@ -184,7 +184,7 @@ export async function memoryRecallNamespace(
   return unwrapMemoryQueryResult(resp);
 }
 
-export async function memoryGraphQuery(
+export async function yellowMemoryGraphQuery(
   namespace?: string,
   subject?: string,
   predicate?: string
@@ -207,7 +207,7 @@ export async function memoryGraphQuery(
   return [];
 }
 
-export async function memoryDocIngest(params: {
+export async function yellowMemoryDocIngest(params: {
   namespace: string;
   key: string;
   title: string;
@@ -237,7 +237,7 @@ export async function memoryDocIngest(params: {
  * the moment the hook polled. The Rust resolver intentionally
  * accepts `""` as "the memory root", so default to that.
  */
-export async function aiListMemoryFiles(relativeDir = ''): Promise<string[]> {
+export async function yellowListMemoryFiles(relativeDir = ''): Promise<string[]> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -254,7 +254,7 @@ export async function aiListMemoryFiles(relativeDir = ''): Promise<string[]> {
   return [];
 }
 
-export async function aiReadMemoryFile(relativePath: string): Promise<string> {
+export async function yellowReadMemoryFile(relativePath: string): Promise<string> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -269,7 +269,7 @@ export async function aiReadMemoryFile(relativePath: string): Promise<string> {
   return '';
 }
 
-export async function aiWriteMemoryFile(relativePath: string, content: string): Promise<void> {
+export async function yellowWriteMemoryFile(relativePath: string, content: string): Promise<void> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -304,8 +304,8 @@ export interface MemoryLearnAllResult {
  * Publishes MemorySyncRequested on the core event bus and returns confirmation.
  * No ingestion runs synchronously — future subscribers will react.
  */
-export async function memorySyncChannel(channelId: string): Promise<MemorySyncChannelResult> {
-  console.debug('[memory.sync] memorySyncChannel: entry channel_id=%s', channelId);
+export async function yellowMemorySyncChannel(channelId: string): Promise<MemorySyncChannelResult> {
+  console.debug('[memory.sync] yellowMemorySyncChannel: entry channel_id=%s', channelId);
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -313,7 +313,7 @@ export async function memorySyncChannel(channelId: string): Promise<MemorySyncCh
     method: 'yellow.memory_sync_channel',
     params: { channel_id: channelId },
   });
-  console.debug('[memory.sync] memorySyncChannel: exit result=%o', resp);
+  console.debug('[memory.sync] yellowMemorySyncChannel: exit result=%o', resp);
   return resp;
 }
 
@@ -321,13 +321,13 @@ export async function memorySyncChannel(channelId: string): Promise<MemorySyncCh
  * Request a memory sync for all channels.
  * Publishes MemorySyncRequested { channel_id: None } on the core event bus.
  */
-export async function memorySyncAll(): Promise<MemorySyncAllResult> {
-  console.debug('[memory.sync] memorySyncAll: entry');
+export async function yellowMemorySyncAll(): Promise<MemorySyncAllResult> {
+  console.debug('[memory.sync] yellowMemorySyncAll: entry');
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
   const resp = await callCoreRpc<MemorySyncAllResult>({ method: 'yellow.memory_sync_all' });
-  console.debug('[memory.sync] memorySyncAll: exit result=%o', resp);
+  console.debug('[memory.sync] yellowMemorySyncAll: exit result=%o', resp);
   return resp;
 }
 
@@ -335,8 +335,8 @@ export async function memorySyncAll(): Promise<MemorySyncAllResult> {
  * Run the tree summarizer over all memory namespaces (or a subset).
  * Processes sequentially; a failing namespace is recorded, not fatal.
  */
-export async function memoryLearnAll(namespaces?: string[]): Promise<MemoryLearnAllResult> {
-  console.debug('[memory.learn] memoryLearnAll: entry namespaces=%o', namespaces);
+export async function yellowMemoryLearnAll(namespaces?: string[]): Promise<MemoryLearnAllResult> {
+  console.debug('[memory.learn] yellowMemoryLearnAll: entry namespaces=%o', namespaces);
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -348,7 +348,7 @@ export async function memoryLearnAll(namespaces?: string[]): Promise<MemoryLearn
     method: 'yellow.memory_learn_all',
     params,
   });
-  console.debug('[memory.learn] memoryLearnAll: exit processed=%d', resp?.namespaces_processed);
+  console.debug('[memory.learn] yellowMemoryLearnAll: exit processed=%d', resp?.namespaces_processed);
   return resp;
 }
 
@@ -378,7 +378,7 @@ export interface WhatsAppMessage {
 }
 
 /** List WhatsApp chats from the local store (scanner-populated). */
-export async function whatsappListChats(params?: {
+export async function yellowWhatsappListChats(params?: {
   account_id?: string;
   limit?: number;
   offset?: number;
@@ -395,7 +395,7 @@ export async function whatsappListChats(params?: {
 }
 
 /** List messages for a chat from the local store. */
-export async function whatsappListMessages(params: {
+export async function yellowWhatsappListMessages(params: {
   chat_id: string;
   account_id?: string;
   limit?: number;
