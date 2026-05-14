@@ -52,14 +52,14 @@ export interface CoreCronRun {
   duration_ms?: number | null;
 }
 
-export async function YellowCronList(): Promise<CommandResponse<CoreCronJob[]>> {
+export async function yellowCronList(): Promise<CommandResponse<CoreCronJob[]>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<CoreCronJob[]>>({ method: 'yellow.cron_list' });
 }
 
-export async function YellowCronUpdate(
+export async function yellowCronUpdate(
   jobId: string,
   patch: Record<string, unknown>
 ): Promise<CommandResponse<CoreCronJob>> {
@@ -72,7 +72,7 @@ export async function YellowCronUpdate(
   });
 }
 
-export async function YellowCronRemove(
+export async function yellowCronRemove(
   jobId: string
 ): Promise<CommandResponse<{ job_id: string; removed: boolean }>> {
   if (!isTauri()) {
@@ -84,7 +84,7 @@ export async function YellowCronRemove(
   });
 }
 
-export async function YellowCronRun(
+export async function yellowCronRun(
   jobId: string
 ): Promise<
   CommandResponse<{
@@ -107,7 +107,7 @@ export async function YellowCronRun(
   >({ method: 'yellow.cron_run', params: { job_id: jobId } });
 }
 
-export async function YellowCronRuns(
+export async function yellowCronRuns(
   jobId: string,
   limit = 20
 ): Promise<CommandResponse<CoreCronRun[]>> {

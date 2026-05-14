@@ -2,7 +2,7 @@
  * About-app capability catalog client.
  *
  * Thin wrapper around the `yellow.about_app_*` JSON-RPC methods exposed by
- * the Rust core (`src/Yellow/about_app/schemas.rs`). The Privacy surface is
+ * the Rust core (`src/yellow/about_app/schemas.rs`). The Privacy surface is
  * the first consumer; future panels can reuse the same types.
  */
 import { callCoreRpc } from '../../services/coreRpcClient';
@@ -41,7 +41,7 @@ export interface Capability {
   privacy?: CapabilityPrivacy;
 }
 
-export async function listCapabilities(category?: CapabilityCategory): Promise<Capability[]> {
+export async function yellowAboutAppListCapabilities(category?: CapabilityCategory): Promise<Capability[]> {
   const response = await callCoreRpc<CommandResponse<Capability[]> | Capability[]>({
     method: 'yellow.about_app_list',
     params: category ? { category } : {},

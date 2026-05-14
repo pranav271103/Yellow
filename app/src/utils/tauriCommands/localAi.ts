@@ -228,7 +228,7 @@ export interface LocalAiDiagnostics {
   ok: boolean;
 }
 
-export async function YellowAgentChat(
+export async function yellowAgentChat(
   message: string,
   modelOverride?: string,
   temperature?: number
@@ -242,7 +242,7 @@ export async function YellowAgentChat(
   });
 }
 
-export async function YellowLocalAiStatus(): Promise<CommandResponse<LocalAiStatus>> {
+export async function yellowLocalAiStatus(): Promise<CommandResponse<LocalAiStatus>> {
   try {
     return await callCoreRpc<CommandResponse<LocalAiStatus>>({
       method: 'yellow.local_ai_status',
@@ -258,7 +258,7 @@ export async function YellowLocalAiStatus(): Promise<CommandResponse<LocalAiStat
   }
 }
 
-export async function YellowLocalAiDownload(
+export async function yellowLocalAiDownload(
   force?: boolean
 ): Promise<CommandResponse<LocalAiStatus>> {
   try {
@@ -269,13 +269,13 @@ export async function YellowLocalAiDownload(
   } catch (err) {
     const message = tauriErrorMessage(err);
     if (message.includes('unknown method: yellow.local_ai_download')) {
-      return await YellowLocalAiStatus();
+      return await yellowLocalAiStatus();
     }
     throw new Error(message);
   }
 }
 
-export async function YellowLocalAiDownloadAllAssets(
+export async function yellowLocalAiDownloadAllAssets(
   force?: boolean
 ): Promise<CommandResponse<LocalAiDownloadsProgress>> {
   return await callCoreRpc<CommandResponse<LocalAiDownloadsProgress>>({
@@ -284,7 +284,7 @@ export async function YellowLocalAiDownloadAllAssets(
   });
 }
 
-export async function YellowLocalAiSummarize(
+export async function yellowLocalAiSummarize(
   text: string,
   maxTokens?: number
 ): Promise<CommandResponse<string>> {
@@ -294,7 +294,7 @@ export async function YellowLocalAiSummarize(
   });
 }
 
-export async function YellowLocalAiPrompt(
+export async function yellowLocalAiPrompt(
   prompt: string,
   maxTokens?: number,
   noThink?: boolean
@@ -305,7 +305,7 @@ export async function YellowLocalAiPrompt(
   });
 }
 
-export async function YellowLocalAiVisionPrompt(
+export async function yellowLocalAiVisionPrompt(
   prompt: string,
   imageRefs: string[],
   maxTokens?: number
@@ -316,7 +316,7 @@ export async function YellowLocalAiVisionPrompt(
   });
 }
 
-export async function YellowLocalAiEmbed(
+export async function yellowLocalAiEmbed(
   inputs: string[]
 ): Promise<CommandResponse<LocalAiEmbeddingResult>> {
   return await callCoreRpc<CommandResponse<LocalAiEmbeddingResult>>({
@@ -325,7 +325,7 @@ export async function YellowLocalAiEmbed(
   });
 }
 
-export async function YellowLocalAiTranscribe(
+export async function yellowLocalAiTranscribe(
   audioPath: string
 ): Promise<CommandResponse<LocalAiSpeechResult>> {
   return await callCoreRpc<CommandResponse<LocalAiSpeechResult>>({
@@ -334,7 +334,7 @@ export async function YellowLocalAiTranscribe(
   });
 }
 
-export async function YellowLocalAiTranscribeBytes(
+export async function yellowLocalAiTranscribeBytes(
   audioBytes: number[],
   extension?: string
 ): Promise<CommandResponse<LocalAiSpeechResult>> {
@@ -344,7 +344,7 @@ export async function YellowLocalAiTranscribeBytes(
   });
 }
 
-export async function YellowLocalAiTts(
+export async function yellowLocalAiTts(
   text: string,
   outputPath?: string
 ): Promise<CommandResponse<LocalAiTtsResult>> {
@@ -357,7 +357,7 @@ export async function YellowLocalAiTts(
 /**
  * Multi-turn chat completion via the local Ollama model.
  */
-export async function YellowLocalAiChat(
+export async function yellowLocalAiChat(
   messages: LocalAiChatMessage[],
   maxTokens?: number
 ): Promise<CommandResponse<string>> {
@@ -371,7 +371,7 @@ export async function YellowLocalAiChat(
  * Ask the local model whether the assistant should react to a user message
  * with an emoji.
  */
-export async function YellowLocalAiShouldReact(
+export async function yellowLocalAiShouldReact(
   message: string,
   channelType: string
 ): Promise<CommandResponse<ReactionDecision>> {
@@ -384,7 +384,7 @@ export async function YellowLocalAiShouldReact(
 /**
  * Classify the emotion and sentiment of a user message via the local model.
  */
-export async function YellowLocalAiAnalyzeSentiment(
+export async function yellowLocalAiAnalyzeSentiment(
   message: string
 ): Promise<CommandResponse<SentimentResult>> {
   return await callCoreRpc<CommandResponse<SentimentResult>>({
@@ -396,7 +396,7 @@ export async function YellowLocalAiAnalyzeSentiment(
 /**
  * Ask the local model whether a GIF response is appropriate for this message.
  */
-export async function YellowLocalAiShouldSendGif(
+export async function yellowLocalAiShouldSendGif(
   message: string,
   channelType: string
 ): Promise<CommandResponse<GifDecision>> {
@@ -409,7 +409,7 @@ export async function YellowLocalAiShouldSendGif(
 /**
  * Search for GIFs via the backend Tenor proxy.
  */
-export async function YellowLocalAiTenorSearch(
+export async function yellowLocalAiTenorSearch(
   query: string,
   limit?: number
 ): Promise<CommandResponse<TenorSearchResult>> {
@@ -419,7 +419,7 @@ export async function YellowLocalAiTenorSearch(
   });
 }
 
-export async function YellowLocalAiAssetsStatus(): Promise<
+export async function yellowLocalAiAssetsStatus(): Promise<
   CommandResponse<LocalAiAssetsStatus>
 > {
   return await callCoreRpc<CommandResponse<LocalAiAssetsStatus>>({
@@ -427,7 +427,7 @@ export async function YellowLocalAiAssetsStatus(): Promise<
   });
 }
 
-export async function YellowLocalAiDownloadsProgress(): Promise<
+export async function yellowLocalAiDownloadsProgress(): Promise<
   CommandResponse<LocalAiDownloadsProgress>
 > {
   return await callCoreRpc<CommandResponse<LocalAiDownloadsProgress>>({
@@ -435,7 +435,7 @@ export async function YellowLocalAiDownloadsProgress(): Promise<
   });
 }
 
-export async function YellowLocalAiDownloadAsset(
+export async function yellowLocalAiDownloadAsset(
   capability: 'chat' | 'vision' | 'embedding' | 'stt' | 'tts'
 ): Promise<CommandResponse<LocalAiAssetsStatus>> {
   return await callCoreRpc<CommandResponse<LocalAiAssetsStatus>>({
@@ -444,29 +444,29 @@ export async function YellowLocalAiDownloadAsset(
   });
 }
 
-export async function YellowLocalAiDeviceProfile(): Promise<DeviceProfileResult> {
+export async function yellowLocalAiDeviceProfile(): Promise<DeviceProfileResult> {
   return await callCoreRpc<DeviceProfileResult>({ method: 'yellow.local_ai_device_profile' });
 }
 
-export async function YellowLocalAiPresets(): Promise<PresetsResponse> {
+export async function yellowLocalAiPresets(): Promise<PresetsResponse> {
   return await callCoreRpc<PresetsResponse>({ method: 'yellow.local_ai_presets' });
 }
 
-export async function YellowLocalAiApplyPreset(tier: string): Promise<ApplyPresetResult> {
+export async function yellowLocalAiApplyPreset(tier: string): Promise<ApplyPresetResult> {
   return await callCoreRpc<ApplyPresetResult>({
     method: 'yellow.local_ai_apply_preset',
     params: { tier },
   });
 }
 
-export async function YellowLocalAiDiagnostics(): Promise<LocalAiDiagnostics> {
+export async function yellowLocalAiDiagnostics(): Promise<LocalAiDiagnostics> {
   return await callCoreRpc<LocalAiDiagnostics>({
     method: 'yellow.local_ai_diagnostics',
     params: {},
   });
 }
 
-export async function YellowLocalAiSetOllamaPath(
+export async function yellowLocalAiSetOllamaPath(
   path: string
 ): Promise<{ ollama_binary_path: string | null; status: LocalAiStatus }> {
   return await callCoreRpc<{ ollama_binary_path: string | null; status: LocalAiStatus }>({

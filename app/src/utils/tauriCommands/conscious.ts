@@ -8,7 +8,7 @@ import { isTauri } from './common';
 /**
  * Trigger a conscious loop run manually.
  */
-export async function consciousLoopRun(
+export async function yellowConsciousLoopRun(
   authToken: string,
   backendUrl: string,
   model?: string

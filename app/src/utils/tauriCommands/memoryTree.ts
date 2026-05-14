@@ -3,7 +3,7 @@
  *
  * Thin wrappers over the `yellow.memory_tree_*` JSON-RPC surface that
  * powers the Memory tab and the Settings → AI backend chooser. Method
- * shapes mirror the Rust handlers in `src/Yellow/memory/tree/read_rpc.rs`
+ * shapes mirror the Rust handlers in `src/yellow/memory/tree/read_rpc.rs`
  * and `schemas.rs`.
  *
  * Responses come back wrapped by `RpcOutcome::single_log` as
@@ -51,7 +51,7 @@ export type EntityKind =
  * A single chunk in the memory tree — one user-visible message-sized unit
  * (an email, a chat turn, a doc page, a transcribed voice clip).
  *
- * Wire shape mirrors Rust's [`ChunkRow`](src/Yellow/memory/tree/read_rpc.rs)
+ * Wire shape mirrors Rust's [`ChunkRow`](src/yellow/memory/tree/read_rpc.rs)
  * — body is replaced with a `≤500-char preview` plus a flag indicating
  * whether the row has an embedding.
  */
@@ -197,15 +197,15 @@ function unwrapResult<T>(resp: T | ResultEnvelope<T>): T {
  * Paginated chunk listing with optional filters. Backed by
  * `yellow.memory_tree_list_chunks`.
  */
-export async function memoryTreeListChunks(filter: ChunkFilter): Promise<ListChunksResponse> {
-  console.debug('[memory-tree-rpc] memoryTreeListChunks: entry filter=%o', filter);
+export async function yellowMemoryTreeListChunks(filter: ChunkFilter): Promise<ListChunksResponse> {
+  console.debug('[memory-tree-rpc] yellowMemoryTreeListChunks: entry filter=%o', filter);
   const resp = await callCoreRpc<ListChunksResponse | ResultEnvelope<ListChunksResponse>>({
     method: 'yellow.memory_tree_list_chunks',
     params: filter,
   });
   const out = unwrapResult(resp);
   console.debug(
-    '[memory-tree-rpc] memoryTreeListChunks: exit n=%d total=%d',
+    '[memory-tree-rpc] yellowMemoryTreeListChunks: exit n=%d total=%d',
     out.chunks?.length ?? 0,
     out.total ?? 0
   );
@@ -219,9 +219,9 @@ export async function memoryTreeListChunks(filter: ChunkFilter): Promise<ListChu
  * timestamps. `user_email_hint` (when supplied) tells the Rust handler to
  * strip that address from email-thread display names.
  */
-export async function memoryTreeListSources(userEmailHint?: string): Promise<Source[]> {
+export async function yellowMemoryTreeListSources(userEmailHint?: string): Promise<Source[]> {
   console.debug(
-    '[memory-tree-rpc] memoryTreeListSources: entry hint=%s',
+    '[memory-tree-rpc] yellowMemoryTreeListSources: entry hint=%s',
     userEmailHint ?? '<none>'
   );
   const params = userEmailHint ? { user_email_hint: userEmailHint } : {};
@@ -230,7 +230,7 @@ export async function memoryTreeListSources(userEmailHint?: string): Promise<Sou
     params,
   });
   const out = unwrapResult(resp);
-  console.debug('[memory-tree-rpc] memoryTreeListSources: exit n=%d', out?.length ?? 0);
+  console.debug('[memory-tree-rpc] yellowMemoryTreeListSources: exit n=%d', out?.length ?? 0);
   return out ?? [];
 }
 
@@ -240,14 +240,14 @@ export async function memoryTreeListSources(userEmailHint?: string): Promise<Sou
  * Keyword `LIKE`-search over chunk bodies. Cheap, deterministic; useful
  * as a fallback when semantic recall is unavailable.
  */
-export async function memoryTreeSearch(query: string, k: number): Promise<Chunk[]> {
-  console.debug('[memory-tree-rpc] memoryTreeSearch: entry query_len=%d k=%d', query.length, k);
+export async function yellowMemoryTreeSearch(query: string, k: number): Promise<Chunk[]> {
+  console.debug('[memory-tree-rpc] yellowMemoryTreeSearch: entry query_len=%d k=%d', query.length, k);
   const resp = await callCoreRpc<Chunk[] | ResultEnvelope<Chunk[]>>({
     method: 'yellow.memory_tree_search',
     params: { query, k },
   });
   const out = unwrapResult(resp);
-  console.debug('[memory-tree-rpc] memoryTreeSearch: exit n=%d', out?.length ?? 0);
+  console.debug('[memory-tree-rpc] yellowMemoryTreeSearch: exit n=%d', out?.length ?? 0);
   return out ?? [];
 }
 
@@ -257,14 +257,14 @@ export async function memoryTreeSearch(query: string, k: number): Promise<Chunk[
  * Semantic recall via the Phase 4 cosine rerank path. Returns leaf chunks
  * and a parallel `scores` array.
  */
-export async function memoryTreeRecall(query: string, k: number): Promise<RecallResponse> {
-  console.debug('[memory-tree-rpc] memoryTreeRecall: entry query_len=%d k=%d', query.length, k);
+export async function yellowMemoryTreeRecall(query: string, k: number): Promise<RecallResponse> {
+  console.debug('[memory-tree-rpc] yellowMemoryTreeRecall: entry query_len=%d k=%d', query.length, k);
   const resp = await callCoreRpc<RecallResponse | ResultEnvelope<RecallResponse>>({
     method: 'yellow.memory_tree_recall',
     params: { query, k },
   });
   const out = unwrapResult(resp);
-  console.debug('[memory-tree-rpc] memoryTreeRecall: exit n=%d', out?.chunks?.length ?? 0);
+  console.debug('[memory-tree-rpc] yellowMemoryTreeRecall: exit n=%d', out?.chunks?.length ?? 0);
   return out ?? { chunks: [], scores: [] };
 }
 
@@ -273,14 +273,14 @@ export async function memoryTreeRecall(query: string, k: number): Promise<Recall
 /**
  * All canonical entities indexed against a single chunk (or summary node) id.
  */
-export async function memoryTreeEntityIndexFor(chunkId: string): Promise<EntityRef[]> {
-  console.debug('[memory-tree-rpc] memoryTreeEntityIndexFor: entry chunk_id=%s', chunkId);
+export async function yellowMemoryTreeEntityIndexFor(chunkId: string): Promise<EntityRef[]> {
+  console.debug('[memory-tree-rpc] yellowMemoryTreeEntityIndexFor: entry chunk_id=%s', chunkId);
   const resp = await callCoreRpc<EntityRef[] | ResultEnvelope<EntityRef[]>>({
     method: 'yellow.memory_tree_entity_index_for',
     params: { chunk_id: chunkId },
   });
   const out = unwrapResult(resp);
-  console.debug('[memory-tree-rpc] memoryTreeEntityIndexFor: exit n=%d', out?.length ?? 0);
+  console.debug('[memory-tree-rpc] yellowMemoryTreeEntityIndexFor: exit n=%d', out?.length ?? 0);
   return out ?? [];
 }
 
@@ -291,14 +291,14 @@ export async function memoryTreeEntityIndexFor(chunkId: string): Promise<EntityR
  * the given entity. Used by the Memory tab's People/Topics lenses to
  * filter the chunk list to those mentioning a selected entity.
  */
-export async function memoryTreeChunksForEntity(entityId: string): Promise<string[]> {
-  console.debug('[memory-tree-rpc] memoryTreeChunksForEntity: entry entity_id=%s', entityId);
+export async function yellowMemoryTreeChunksForEntity(entityId: string): Promise<string[]> {
+  console.debug('[memory-tree-rpc] yellowMemoryTreeChunksForEntity: entry entity_id=%s', entityId);
   const resp = await callCoreRpc<string[] | ResultEnvelope<string[]>>({
     method: 'yellow.memory_tree_chunks_for_entity',
     params: { entity_id: entityId },
   });
   const out = unwrapResult(resp);
-  console.debug('[memory-tree-rpc] memoryTreeChunksForEntity: exit n=%d', out?.length ?? 0);
+  console.debug('[memory-tree-rpc] yellowMemoryTreeChunksForEntity: exit n=%d', out?.length ?? 0);
   return out ?? [];
 }
 
@@ -309,9 +309,9 @@ export async function memoryTreeChunksForEntity(entityId: string): Promise<strin
  * by `kind`. The Rust handler treats `limit` as required; we default to 50
  * to match the navigator's lens cardinality.
  */
-export async function memoryTreeTopEntities(kind?: string, limit = 50): Promise<EntityRef[]> {
+export async function yellowMemoryTreeTopEntities(kind?: string, limit = 50): Promise<EntityRef[]> {
   console.debug(
-    '[memory-tree-rpc] memoryTreeTopEntities: entry kind=%s limit=%d',
+    '[memory-tree-rpc] yellowMemoryTreeTopEntities: entry kind=%s limit=%d',
     kind ?? '<all>',
     limit
   );
@@ -322,7 +322,7 @@ export async function memoryTreeTopEntities(kind?: string, limit = 50): Promise<
     params,
   });
   const out = unwrapResult(resp);
-  console.debug('[memory-tree-rpc] memoryTreeTopEntities: exit n=%d', out?.length ?? 0);
+  console.debug('[memory-tree-rpc] yellowMemoryTreeTopEntities: exit n=%d', out?.length ?? 0);
   return out ?? [];
 }
 
@@ -333,14 +333,14 @@ export async function memoryTreeTopEntities(kind?: string, limit = 50): Promise<
  * `null` when the chunk has no score row (e.g. it was admitted before
  * scoring was enabled, or it is a synthesized fixture in tests).
  */
-export async function memoryTreeChunkScore(chunkId: string): Promise<ScoreBreakdown | null> {
-  console.debug('[memory-tree-rpc] memoryTreeChunkScore: entry chunk_id=%s', chunkId);
+export async function yellowMemoryTreeChunkScore(chunkId: string): Promise<ScoreBreakdown | null> {
+  console.debug('[memory-tree-rpc] yellowMemoryTreeChunkScore: entry chunk_id=%s', chunkId);
   const resp = await callCoreRpc<ScoreBreakdown | null | ResultEnvelope<ScoreBreakdown | null>>({
     method: 'yellow.memory_tree_chunk_score',
     params: { chunk_id: chunkId },
   });
   const out = unwrapResult(resp);
-  console.debug('[memory-tree-rpc] memoryTreeChunkScore: exit kept=%o', out?.kept);
+  console.debug('[memory-tree-rpc] yellowMemoryTreeChunkScore: exit kept=%o', out?.kept);
   return out ?? null;
 }
 
@@ -350,15 +350,15 @@ export async function memoryTreeChunkScore(chunkId: string): Promise<ScoreBreakd
  * Purge one chunk plus its score row, entity-index rows, and on-disk .md
  * file. Idempotent — missing chunk returns `deleted=false`.
  */
-export async function memoryTreeDeleteChunk(chunkId: string): Promise<DeleteChunkResponse> {
-  console.debug('[memory-tree-rpc] memoryTreeDeleteChunk: entry chunk_id=%s', chunkId);
+export async function yellowMemoryTreeDeleteChunk(chunkId: string): Promise<DeleteChunkResponse> {
+  console.debug('[memory-tree-rpc] yellowMemoryTreeDeleteChunk: entry chunk_id=%s', chunkId);
   const resp = await callCoreRpc<DeleteChunkResponse | ResultEnvelope<DeleteChunkResponse>>({
     method: 'yellow.memory_tree_delete_chunk',
     params: { chunk_id: chunkId },
   });
   const out = unwrapResult(resp);
   console.debug(
-    '[memory-tree-rpc] memoryTreeDeleteChunk: exit deleted=%o score_rows=%d entity_rows=%d',
+    '[memory-tree-rpc] yellowMemoryTreeDeleteChunk: exit deleted=%o score_rows=%d entity_rows=%d',
     out?.deleted,
     out?.score_rows_removed,
     out?.entity_index_rows_removed
@@ -371,13 +371,13 @@ export async function memoryTreeDeleteChunk(chunkId: string): Promise<DeleteChun
 /**
  * Read the currently configured LLM backend (`cloud` or `local`).
  */
-export async function memoryTreeGetLlm(): Promise<LlmResponse> {
-  console.debug('[memory-tree-rpc] memoryTreeGetLlm: entry');
+export async function yellowMemoryTreeGetLlm(): Promise<LlmResponse> {
+  console.debug('[memory-tree-rpc] yellowMemoryTreeGetLlm: entry');
   const resp = await callCoreRpc<LlmResponse | ResultEnvelope<LlmResponse>>({
     method: 'yellow.memory_tree_get_llm',
   });
   const out = unwrapResult(resp);
-  console.debug('[memory-tree-rpc] memoryTreeGetLlm: exit current=%s', out?.current);
+  console.debug('[memory-tree-rpc] yellowMemoryTreeGetLlm: exit current=%s', out?.current);
   return out;
 }
 
@@ -396,13 +396,13 @@ export async function memoryTreeGetLlm(): Promise<LlmResponse> {
  * stay terse while sites that want to persist model picks pass the
  * extended shape.
  */
-export async function memoryTreeSetLlm(
+export async function yellowMemoryTreeSetLlm(
   reqOrBackend: LlmBackend | SetLlmRequest
 ): Promise<LlmResponse> {
   const params: SetLlmRequest =
     typeof reqOrBackend === 'string' ? { backend: reqOrBackend } : reqOrBackend;
   console.debug(
-    '[memory-tree-rpc] memoryTreeSetLlm: entry backend=%s cloud_model=%s extract_model=%s summariser_model=%s',
+    '[memory-tree-rpc] yellowMemoryTreeSetLlm: entry backend=%s cloud_model=%s extract_model=%s summariser_model=%s',
     params.backend,
     params.cloud_model ?? '<none>',
     params.extract_model ?? '<none>',
@@ -413,7 +413,7 @@ export async function memoryTreeSetLlm(
     params,
   });
   const out = unwrapResult(resp);
-  console.debug('[memory-tree-rpc] memoryTreeSetLlm: exit current=%s', out?.current);
+  console.debug('[memory-tree-rpc] yellowMemoryTreeSetLlm: exit current=%s', out?.current);
   return out;
 }
 
@@ -500,14 +500,14 @@ export interface WipeAllResponse {
  * positive count means the next sync will be a full re-fetch; `0`
  * means there were no live cursors to drop (e.g. fresh workspace).
  */
-export async function memoryTreeWipeAll(): Promise<WipeAllResponse> {
-  console.debug('[memory-tree-rpc] memoryTreeWipeAll: entry');
+export async function yellowMemoryTreeWipeAll(): Promise<WipeAllResponse> {
+  console.debug('[memory-tree-rpc] yellowMemoryTreeWipeAll: entry');
   const resp = await callCoreRpc<WipeAllResponse | ResultEnvelope<WipeAllResponse>>({
     method: 'yellow.memory_tree_wipe_all',
   });
   const out = unwrapResult(resp);
   console.debug(
-    '[memory-tree-rpc] memoryTreeWipeAll: exit rows=%d dirs=%o',
+    '[memory-tree-rpc] yellowMemoryTreeWipeAll: exit rows=%d dirs=%o',
     out.rows_deleted,
     out.dirs_removed
   );
@@ -534,14 +534,14 @@ export interface ResetTreeResponse {
  * → real local LLM) to re-summarise existing data on the new
  * model.
  */
-export async function memoryTreeResetTree(): Promise<ResetTreeResponse> {
-  console.debug('[memory-tree-rpc] memoryTreeResetTree: entry');
+export async function yellowMemoryTreeResetTree(): Promise<ResetTreeResponse> {
+  console.debug('[memory-tree-rpc] yellowMemoryTreeResetTree: entry');
   const resp = await callCoreRpc<ResetTreeResponse | ResultEnvelope<ResetTreeResponse>>({
     method: 'yellow.memory_tree_reset_tree',
   });
   const out = unwrapResult(resp);
   console.debug(
-    '[memory-tree-rpc] memoryTreeResetTree: exit tree_rows=%d chunks=%d jobs=%d',
+    '[memory-tree-rpc] yellowMemoryTreeResetTree: exit tree_rows=%d chunks=%d jobs=%d',
     out.tree_rows_deleted,
     out.chunks_requeued,
     out.jobs_enqueued
@@ -564,14 +564,14 @@ export interface FlushNowResponse {
  * Safe to spam — same UTC-day dedupe key as the scheduled flush, so
  * duplicate clicks return `enqueued=false` rather than queuing twice.
  */
-export async function memoryTreeFlushNow(): Promise<FlushNowResponse> {
-  console.debug('[memory-tree-rpc] memoryTreeFlushNow: entry');
+export async function yellowMemoryTreeFlushNow(): Promise<FlushNowResponse> {
+  console.debug('[memory-tree-rpc] yellowMemoryTreeFlushNow: entry');
   const resp = await callCoreRpc<FlushNowResponse | ResultEnvelope<FlushNowResponse>>({
     method: 'yellow.memory_tree_flush_now',
   });
   const out = unwrapResult(resp);
   console.debug(
-    '[memory-tree-rpc] memoryTreeFlushNow: exit enqueued=%s stale_buffers=%d',
+    '[memory-tree-rpc] yellowMemoryTreeFlushNow: exit enqueued=%s stale_buffers=%d',
     out.enqueued,
     out.stale_buffers
   );
@@ -583,10 +583,10 @@ export async function memoryTreeFlushNow(): Promise<FlushNowResponse> {
  * summaries) or the document↔contact graph (chunks linked to person
  * entities they mention). Backed by `yellow.memory_tree_graph_export`.
  */
-export async function memoryTreeGraphExport(
+export async function yellowMemoryTreeGraphExport(
   mode: GraphMode = 'tree'
 ): Promise<GraphExportResponse> {
-  console.debug('[memory-tree-rpc] memoryTreeGraphExport: entry mode=%s', mode);
+  console.debug('[memory-tree-rpc] yellowMemoryTreeGraphExport: entry mode=%s', mode);
   const resp = await callCoreRpc<GraphExportResponse | ResultEnvelope<GraphExportResponse>>({
     method: 'yellow.memory_tree_graph_export',
     params: { mode },
@@ -596,7 +596,7 @@ export async function memoryTreeGraphExport(
     // Don't log the absolute content root — it embeds the user's
     // home directory + username and shows up in console logs / bug
     // reports. The path is still returned to the caller.
-    '[memory-tree-rpc] memoryTreeGraphExport: exit mode=%s n=%d edges=%d',
+    '[memory-tree-rpc] yellowMemoryTreeGraphExport: exit mode=%s n=%d edges=%d',
     mode,
     out.nodes?.length ?? 0,
     out.edges?.length ?? 0

@@ -112,7 +112,7 @@ export interface AutocompleteClearHistoryResult {
   cleared: number;
 }
 
-export async function YellowAutocompleteStatus(): Promise<CommandResponse<AutocompleteStatus>> {
+export async function yellowAutocompleteStatus(): Promise<CommandResponse<AutocompleteStatus>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -121,7 +121,7 @@ export async function YellowAutocompleteStatus(): Promise<CommandResponse<Autoco
   });
 }
 
-export async function YellowAutocompleteStart(
+export async function yellowAutocompleteStart(
   params?: AutocompleteStartParams
 ): Promise<CommandResponse<AutocompleteStartResult>> {
   if (!isTauri()) {
@@ -133,7 +133,7 @@ export async function YellowAutocompleteStart(
   });
 }
 
-export async function YellowAutocompleteStop(
+export async function yellowAutocompleteStop(
   params?: AutocompleteStopParams
 ): Promise<CommandResponse<AutocompleteStopResult>> {
   if (!isTauri()) {
@@ -145,7 +145,7 @@ export async function YellowAutocompleteStop(
   });
 }
 
-export async function YellowAutocompleteCurrent(
+export async function yellowAutocompleteCurrent(
   params?: AutocompleteCurrentParams
 ): Promise<CommandResponse<AutocompleteCurrentResult>> {
   if (!isTauri()) {
@@ -157,7 +157,7 @@ export async function YellowAutocompleteCurrent(
   });
 }
 
-export async function YellowAutocompleteDebugFocus(): Promise<
+export async function yellowAutocompleteDebugFocus(): Promise<
   CommandResponse<AutocompleteDebugFocusResult>
 > {
   if (!isTauri()) {
@@ -168,7 +168,7 @@ export async function YellowAutocompleteDebugFocus(): Promise<
   });
 }
 
-export async function YellowAutocompleteAccept(
+export async function yellowAutocompleteAccept(
   params?: AutocompleteAcceptParams
 ): Promise<CommandResponse<AutocompleteAcceptResult>> {
   if (!isTauri()) {
@@ -180,7 +180,7 @@ export async function YellowAutocompleteAccept(
   });
 }
 
-export async function YellowAutocompleteSetStyle(
+export async function yellowAutocompleteSetStyle(
   params: AutocompleteSetStyleParams
 ): Promise<CommandResponse<AutocompleteSetStyleResult>> {
   if (!isTauri()) {
@@ -192,7 +192,7 @@ export async function YellowAutocompleteSetStyle(
   });
 }
 
-export async function YellowAutocompleteHistory(params?: {
+export async function yellowAutocompleteHistory(params?: {
   limit?: number;
 }): Promise<CommandResponse<AutocompleteHistoryResult>> {
   if (!isTauri()) {
@@ -204,7 +204,7 @@ export async function YellowAutocompleteHistory(params?: {
   });
 }
 
-export async function YellowAutocompleteClearHistory(): Promise<
+export async function yellowAutocompleteClearHistory(): Promise<
   CommandResponse<AutocompleteClearHistoryResult>
 > {
   if (!isTauri()) {

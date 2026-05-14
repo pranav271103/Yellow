@@ -169,7 +169,7 @@ export interface CaptureTestResult {
   timing_ms: number;
 }
 
-export async function YellowAccessibilityStatus(): Promise<
+export async function yellowAccessibilityStatus(): Promise<
   CommandResponse<AccessibilityStatus>
 > {
   if (!isTauri()) {
@@ -181,7 +181,7 @@ export async function YellowAccessibilityStatus(): Promise<
   });
 }
 
-export async function YellowAccessibilityRequestPermissions(): Promise<
+export async function yellowAccessibilityRequestPermissions(): Promise<
   CommandResponse<AccessibilityPermissionStatus>
 > {
   if (!isTauri()) {
@@ -193,7 +193,7 @@ export async function YellowAccessibilityRequestPermissions(): Promise<
   });
 }
 
-export async function YellowAccessibilityRequestPermission(
+export async function yellowAccessibilityRequestPermission(
   permission: AccessibilityPermissionKind
 ): Promise<CommandResponse<AccessibilityPermissionStatus>> {
   if (!isTauri()) {
@@ -206,7 +206,7 @@ export async function YellowAccessibilityRequestPermission(
   });
 }
 
-export async function YellowAccessibilityStartSession(
+export async function yellowAccessibilityStartSession(
   params: AccessibilityStartSessionParams
 ): Promise<CommandResponse<AccessibilitySessionStatus>> {
   if (!isTauri()) {
@@ -219,7 +219,7 @@ export async function YellowAccessibilityStartSession(
   });
 }
 
-export async function YellowAccessibilityStopSession(
+export async function yellowAccessibilityStopSession(
   params?: AccessibilityStopSessionParams
 ): Promise<CommandResponse<AccessibilitySessionStatus>> {
   if (!isTauri()) {
@@ -232,7 +232,7 @@ export async function YellowAccessibilityStopSession(
   });
 }
 
-export async function YellowAccessibilityCaptureNow(): Promise<
+export async function yellowAccessibilityCaptureNow(): Promise<
   CommandResponse<AccessibilityCaptureNowResult>
 > {
   if (!isTauri()) {
@@ -244,7 +244,7 @@ export async function YellowAccessibilityCaptureNow(): Promise<
   });
 }
 
-export async function YellowAccessibilityInputAction(
+export async function yellowAccessibilityInputAction(
   params: AccessibilityInputActionParams
 ): Promise<CommandResponse<AccessibilityInputActionResult>> {
   if (!isTauri()) {
@@ -257,7 +257,7 @@ export async function YellowAccessibilityInputAction(
   });
 }
 
-export async function YellowAccessibilityAutocompleteSuggest(
+export async function yellowAccessibilityAutocompleteSuggest(
   params?: AccessibilityAutocompleteSuggestParams
 ): Promise<CommandResponse<AccessibilityAutocompleteSuggestResult>> {
   if (!isTauri()) {
@@ -270,7 +270,7 @@ export async function YellowAccessibilityAutocompleteSuggest(
   });
 }
 
-export async function YellowAccessibilityAutocompleteCommit(
+export async function yellowAccessibilityAutocompleteCommit(
   params: AccessibilityAutocompleteCommitParams
 ): Promise<CommandResponse<AccessibilityAutocompleteCommitResult>> {
   if (!isTauri()) {
@@ -283,7 +283,7 @@ export async function YellowAccessibilityAutocompleteCommit(
   });
 }
 
-export async function YellowAccessibilityVisionRecent(
+export async function yellowAccessibilityVisionRecent(
   limit?: number
 ): Promise<CommandResponse<AccessibilityVisionRecentResult>> {
   if (!isTauri()) {
@@ -296,7 +296,7 @@ export async function YellowAccessibilityVisionRecent(
   });
 }
 
-export async function YellowAccessibilityVisionFlush(): Promise<
+export async function yellowAccessibilityVisionFlush(): Promise<
   CommandResponse<AccessibilityVisionFlushResult>
 > {
   if (!isTauri()) {
@@ -308,7 +308,7 @@ export async function YellowAccessibilityVisionFlush(): Promise<
   });
 }
 
-export async function YellowScreenIntelligenceCaptureTest(): Promise<
+export async function yellowScreenIntelligenceCaptureTest(): Promise<
   CommandResponse<CaptureTestResult>
 > {
   if (!isTauri()) {

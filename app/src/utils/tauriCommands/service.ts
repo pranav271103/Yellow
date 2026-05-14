@@ -30,7 +30,7 @@ export interface RestartStatus {
   reason: string;
 }
 
-export async function YellowServiceInstall(): Promise<CommandResponse<ServiceStatus>> {
+export async function yellowServiceInstall(): Promise<CommandResponse<ServiceStatus>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -44,7 +44,7 @@ export async function YellowServiceInstall(): Promise<CommandResponse<ServiceSta
   }
 }
 
-export async function YellowServiceStart(): Promise<CommandResponse<ServiceStatus>> {
+export async function yellowServiceStart(): Promise<CommandResponse<ServiceStatus>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -56,7 +56,7 @@ export async function YellowServiceStart(): Promise<CommandResponse<ServiceStatu
   }
 }
 
-export async function YellowServiceStop(): Promise<CommandResponse<ServiceStatus>> {
+export async function yellowServiceStop(): Promise<CommandResponse<ServiceStatus>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -68,7 +68,7 @@ export async function YellowServiceStop(): Promise<CommandResponse<ServiceStatus
   }
 }
 
-export async function YellowServiceStatus(): Promise<CommandResponse<ServiceStatus>> {
+export async function yellowServiceStatus(): Promise<CommandResponse<ServiceStatus>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -82,7 +82,7 @@ export async function YellowServiceStatus(): Promise<CommandResponse<ServiceStat
   }
 }
 
-export async function YellowServiceUninstall(): Promise<CommandResponse<ServiceStatus>> {
+export async function yellowServiceUninstall(): Promise<CommandResponse<ServiceStatus>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -96,7 +96,7 @@ export async function YellowServiceUninstall(): Promise<CommandResponse<ServiceS
   }
 }
 
-export async function YellowServiceRestart(
+export async function yellowServiceRestart(
   source?: string,
   reason?: string
 ): Promise<CommandResponse<RestartStatus>> {
@@ -109,7 +109,7 @@ export async function YellowServiceRestart(
   });
 }
 
-export async function YellowAgentServerStatus(): Promise<CommandResponse<AgentServerStatus>> {
+export async function yellowAgentServerStatus(): Promise<CommandResponse<AgentServerStatus>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -118,7 +118,7 @@ export async function YellowAgentServerStatus(): Promise<CommandResponse<AgentSe
   });
 }
 
-export async function YellowGetDaemonHostConfig(): Promise<CommandResponse<DaemonHostConfig>> {
+export async function yellowGetDaemonHostConfig(): Promise<CommandResponse<DaemonHostConfig>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -127,7 +127,7 @@ export async function YellowGetDaemonHostConfig(): Promise<CommandResponse<Daemo
   });
 }
 
-export async function YellowSetDaemonHostConfig(
+export async function yellowSetDaemonHostConfig(
   showTray: boolean
 ): Promise<CommandResponse<DaemonHostConfig>> {
   if (!isTauri()) {

@@ -16,7 +16,7 @@ export interface ComposioTriggerHistoryResult {
   entries: ComposioTriggerHistoryEntry[];
 }
 
-export async function YellowComposioListTriggerHistory(
+export async function yellowComposioListTriggerHistory(
   limit = 100
 ): Promise<CommandResponse<{ result: ComposioTriggerHistoryResult }>> {
   if (!isTauri()) {

@@ -60,14 +60,14 @@ export interface TickResult {
 
 // ── Status & Trigger ─────────────────────────────────────────────────────────
 
-export async function subconsciousStatus(): Promise<CommandResponse<SubconsciousStatus>> {
+export async function yellowSubconsciousStatus(): Promise<CommandResponse<SubconsciousStatus>> {
   if (!isTauri()) throw new Error('Not running in Tauri');
   return await callCoreRpc<CommandResponse<SubconsciousStatus>>({
     method: 'yellow.subconscious_status',
   });
 }
 
-export async function subconsciousTrigger(): Promise<CommandResponse<TickResult>> {
+export async function yellowSubconsciousTrigger(): Promise<CommandResponse<TickResult>> {
   if (!isTauri()) throw new Error('Not running in Tauri');
   return await callCoreRpc<CommandResponse<TickResult>>({
     method: 'yellow.subconscious_trigger',
@@ -76,7 +76,7 @@ export async function subconsciousTrigger(): Promise<CommandResponse<TickResult>
 
 // ── Tasks CRUD ───────────────────────────────────────────────────────────────
 
-export async function subconsciousTasksList(
+export async function yellowSubconsciousTasksList(
   enabledOnly = false
 ): Promise<CommandResponse<SubconsciousTask[]>> {
   if (!isTauri()) throw new Error('Not running in Tauri');
@@ -86,7 +86,7 @@ export async function subconsciousTasksList(
   });
 }
 
-export async function subconsciousTasksAdd(
+export async function yellowSubconsciousTasksAdd(
   title: string,
   source: 'user' | 'system' = 'user'
 ): Promise<CommandResponse<SubconsciousTask>> {
@@ -97,7 +97,7 @@ export async function subconsciousTasksAdd(
   });
 }
 
-export async function subconsciousTasksUpdate(
+export async function yellowSubconsciousTasksUpdate(
   taskId: string,
   patch: { title?: string; enabled?: boolean }
 ): Promise<CommandResponse<{ updated: string }>> {
@@ -108,7 +108,7 @@ export async function subconsciousTasksUpdate(
   });
 }
 
-export async function subconsciousTasksRemove(
+export async function yellowSubconsciousTasksRemove(
   taskId: string
 ): Promise<CommandResponse<{ removed: string }>> {
   if (!isTauri()) throw new Error('Not running in Tauri');
@@ -120,7 +120,7 @@ export async function subconsciousTasksRemove(
 
 // ── Log ──────────────────────────────────────────────────────────────────────
 
-export async function subconsciousLogList(
+export async function yellowSubconsciousLogList(
   taskId?: string,
   limit = 50
 ): Promise<CommandResponse<SubconsciousLogEntry[]>> {
@@ -133,7 +133,7 @@ export async function subconsciousLogList(
 
 // ── Escalations ──────────────────────────────────────────────────────────────
 
-export async function subconsciousEscalationsList(
+export async function yellowSubconsciousEscalationsList(
   status?: 'pending' | 'approved' | 'dismissed'
 ): Promise<CommandResponse<SubconsciousEscalation[]>> {
   if (!isTauri()) throw new Error('Not running in Tauri');
@@ -143,7 +143,7 @@ export async function subconsciousEscalationsList(
   });
 }
 
-export async function subconsciousEscalationsApprove(
+export async function yellowSubconsciousEscalationsApprove(
   escalationId: string
 ): Promise<CommandResponse<{ approved: string }>> {
   if (!isTauri()) throw new Error('Not running in Tauri');
@@ -153,7 +153,7 @@ export async function subconsciousEscalationsApprove(
   });
 }
 
-export async function subconsciousEscalationsDismiss(
+export async function yellowSubconsciousEscalationsDismiss(
   escalationId: string
 ): Promise<CommandResponse<{ dismissed: string }>> {
   if (!isTauri()) throw new Error('Not running in Tauri');
@@ -218,7 +218,7 @@ export interface Reflection {
   dismissed_at: number | null;
 }
 
-export async function listReflections(
+export async function yellowSubconsciousListReflections(
   limit = 50,
   sinceTs?: number
 ): Promise<CommandResponse<Reflection[]>> {
@@ -242,7 +242,7 @@ export async function listReflections(
  * into existing threads — every act gets its own conversation so the
  * user's main chat surface stays uncluttered.
  */
-export async function actOnReflection(
+export async function yellowSubconsciousActOnReflection(
   reflectionId: string
 ): Promise<CommandResponse<{ reflection_id: string; thread_id: string }>> {
   if (!isTauri()) throw new Error('Not running in Tauri');
@@ -252,7 +252,7 @@ export async function actOnReflection(
   });
 }
 
-export async function dismissReflection(
+export async function yellowSubconsciousDismissReflection(
   reflectionId: string
 ): Promise<CommandResponse<{ dismissed: string }>> {
   if (!isTauri()) throw new Error('Not running in Tauri');
