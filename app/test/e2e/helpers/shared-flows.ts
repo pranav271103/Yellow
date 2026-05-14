@@ -67,7 +67,7 @@ export async function waitForHomePage(timeout = 15_000) {
     'Good morning',
     'Good afternoon',
     'Good evening',
-    'Message OpenHuman',
+    'Message Yellow',
     'Upgrade to Premium',
   ];
   const deadline = Date.now() + timeout;

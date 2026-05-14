@@ -112,8 +112,8 @@ function resolveBuiltAppPath(): string | null {
   const repoRoot = process.cwd();
   const appDir = path.join(repoRoot, 'app');
   const candidates = [
-    path.join(appDir, 'src-tauri', 'target', 'debug', 'bundle', 'macos', 'OpenHuman.app'),
-    path.join(repoRoot, 'target', 'debug', 'bundle', 'macos', 'OpenHuman.app'),
+    path.join(appDir, 'src-tauri', 'target', 'debug', 'bundle', 'macos', 'Yellow.app'),
+    path.join(repoRoot, 'target', 'debug', 'bundle', 'macos', 'Yellow.app'),
   ];
 
   for (const candidate of candidates) {
@@ -148,7 +148,7 @@ export async function triggerDeepLink(url: string): Promise<void> {
 
     try {
       await browser.execute('macos: launchApp', {
-        bundleId: 'com.openhuman.app',
+        bundleId: 'com.Yellow.app',
         arguments: [url],
       } as Record<string, unknown>);
       deepLinkDebug('macos: launchApp OK');
@@ -157,7 +157,7 @@ export async function triggerDeepLink(url: string): Promise<void> {
     }
     for (let attempt = 1; attempt <= 3; attempt += 1) {
       try {
-        await browser.execute('macos: deepLink', { url, bundleId: 'com.openhuman.app' } as Record<
+        await browser.execute('macos: deepLink', { url, bundleId: 'com.Yellow.app' } as Record<
           string,
           unknown
         >);
@@ -226,20 +226,20 @@ export async function triggerDeepLink(url: string): Promise<void> {
  * Convenience wrapper for auth deep links.
  */
 export function triggerAuthDeepLink(token: string): Promise<void> {
-  const envBypassToken = (process.env.OPENHUMAN_E2E_AUTH_BYPASS_TOKEN || '').trim();
+  const envBypassToken = (process.env.Yellow_E2E_AUTH_BYPASS_TOKEN || '').trim();
   deepLinkDebug('triggerAuthDeepLink', { token, envBypassToken: envBypassToken || '(none)' });
   if (envBypassToken) {
-    return triggerDeepLink(`openhuman://auth?token=${encodeURIComponent(envBypassToken)}&key=auth`);
+    return triggerDeepLink(`Yellow://auth?token=${encodeURIComponent(envBypassToken)}&key=auth`);
   }
 
-  const authBypassEnabled = (process.env.OPENHUMAN_E2E_AUTH_BYPASS || '').trim() === '1';
+  const authBypassEnabled = (process.env.Yellow_E2E_AUTH_BYPASS || '').trim() === '1';
   if (authBypassEnabled) {
-    const userId = (process.env.OPENHUMAN_E2E_AUTH_BYPASS_USER_ID || 'e2e-user').trim();
+    const userId = (process.env.Yellow_E2E_AUTH_BYPASS_USER_ID || 'e2e-user').trim();
     deepLinkDebug('triggerAuthDeepLink bypass JWT path', { userId });
     return triggerAuthDeepLinkBypass(userId || 'e2e-user');
   }
 
-  return triggerDeepLink(`openhuman://auth?token=${encodeURIComponent(token)}`);
+  return triggerDeepLink(`Yellow://auth?token=${encodeURIComponent(token)}`);
 }
 
 function toBase64Url(value: string): string {
@@ -266,5 +266,5 @@ export function buildBypassJwt(userId: string = 'e2e-user'): string {
 
 export function triggerAuthDeepLinkBypass(userId: string = 'e2e-user'): Promise<void> {
   const token = buildBypassJwt(userId);
-  return triggerDeepLink(`openhuman://auth?token=${encodeURIComponent(token)}&key=auth`);
+  return triggerDeepLink(`Yellow://auth?token=${encodeURIComponent(token)}&key=auth`);
 }
