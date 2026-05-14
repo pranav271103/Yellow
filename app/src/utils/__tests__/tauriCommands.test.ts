@@ -11,20 +11,20 @@ describe('tauriCommands', () => {
   const mockInvoke = invoke as Mock;
   const mockCallCoreRpc = callCoreRpc as Mock;
   let getAuthState: typeof import('../tauriCommands').getAuthState;
-  let resetOpenHumanDataAndRestartCore: typeof import('../tauriCommands').resetOpenHumanDataAndRestartCore;
+  let resetYellowDataAndRestartCore: typeof import('../tauriCommands').resetYellowDataAndRestartCore;
   let storeSession: typeof import('../tauriCommands').storeSession;
-  let openhumanLocalAiStatus: typeof import('../tauriCommands').openhumanLocalAiStatus;
-  let openhumanServiceStatus: typeof import('../tauriCommands').openhumanServiceStatus;
+  let YellowLocalAiStatus: typeof import('../tauriCommands').YellowLocalAiStatus;
+  let YellowServiceStatus: typeof import('../tauriCommands').YellowServiceStatus;
 
   beforeEach(async () => {
     vi.clearAllMocks();
     mockIsTauri.mockReturnValue(true);
     const actual = await vi.importActual<typeof import('../tauriCommands')>('../tauriCommands');
     getAuthState = actual.getAuthState;
-    resetOpenHumanDataAndRestartCore = actual.resetOpenHumanDataAndRestartCore;
+    resetYellowDataAndRestartCore = actual.resetYellowDataAndRestartCore;
     storeSession = actual.storeSession;
-    openhumanLocalAiStatus = actual.openhumanLocalAiStatus;
-    openhumanServiceStatus = actual.openhumanServiceStatus;
+    YellowLocalAiStatus = actual.YellowLocalAiStatus;
+    YellowServiceStatus = actual.YellowServiceStatus;
   });
 
   test('getAuthState maps result shape from core response', async () => {
@@ -34,7 +34,7 @@ describe('tauriCommands', () => {
 
     const response = await getAuthState();
 
-    expect(mockCallCoreRpc).toHaveBeenCalledWith({ method: 'openhuman.auth_get_state' });
+    expect(mockCallCoreRpc).toHaveBeenCalledWith({ method: 'Yellow.auth_get_state' });
     expect(response).toEqual({ is_authenticated: true, user: { id: 'u1' } });
   });
 
@@ -42,30 +42,30 @@ describe('tauriCommands', () => {
     await storeSession('jwt-token', { id: 'u1' });
 
     expect(mockCallCoreRpc).toHaveBeenCalledWith({
-      method: 'openhuman.auth_store_session',
+      method: 'Yellow.auth_store_session',
       params: { token: 'jwt-token', user: { id: 'u1' } },
     });
   });
 
-  test('resetOpenHumanDataAndRestartCore invokes the destructive Tauri command', async () => {
-    await resetOpenHumanDataAndRestartCore();
+  test('resetYellowDataAndRestartCore invokes the destructive Tauri command', async () => {
+    await resetYellowDataAndRestartCore();
 
-    expect(mockCallCoreRpc).toHaveBeenCalledWith({ method: 'openhuman.config_reset_local_data' });
+    expect(mockCallCoreRpc).toHaveBeenCalledWith({ method: 'Yellow.config_reset_local_data' });
     expect(mockInvoke).toHaveBeenCalledWith('restart_core_process');
   });
 
-  test('openhumanLocalAiStatus returns upgrade hint on unknown method', async () => {
-    mockCallCoreRpc.mockRejectedValueOnce(new Error('unknown method: openhuman.local_ai_status'));
+  test('YellowLocalAiStatus returns upgrade hint on unknown method', async () => {
+    mockCallCoreRpc.mockRejectedValueOnce(new Error('unknown method: Yellow.local_ai_status'));
 
-    await expect(openhumanLocalAiStatus()).rejects.toThrow(
+    await expect(YellowLocalAiStatus()).rejects.toThrow(
       'Local model runtime is unavailable in this core build. Restart app after updating to the latest build.'
     );
   });
 
-  test('openhumanServiceStatus throws when not running in Tauri', async () => {
+  test('YellowServiceStatus throws when not running in Tauri', async () => {
     mockIsTauri.mockReturnValue(false);
 
-    await expect(openhumanServiceStatus()).rejects.toThrow('Not running in Tauri');
+    await expect(YellowServiceStatus()).rejects.toThrow('Not running in Tauri');
     expect(mockCallCoreRpc).not.toHaveBeenCalled();
   });
 });
