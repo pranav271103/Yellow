@@ -48,7 +48,7 @@ export async function openhumanWebhooksListRegistrations(): Promise<
   }
   return await callCoreRpc<
     CommandResponse<{ result: { registrations: WebhookDebugRegistration[] } }>
-  >({ method: 'openhuman.webhooks_list_registrations' });
+  >({ method: 'yellow.webhooks_list_registrations' });
 }
 
 export async function openhumanWebhooksListLogs(
@@ -58,7 +58,7 @@ export async function openhumanWebhooksListLogs(
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<{ result: { logs: WebhookDebugLogEntry[] } }>>({
-    method: 'openhuman.webhooks_list_logs',
+    method: 'yellow.webhooks_list_logs',
     params: { limit },
   });
 }
@@ -68,7 +68,7 @@ export async function openhumanWebhooksClearLogs(): Promise<CommandResponse<{ cl
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<{ cleared: number }>>({
-    method: 'openhuman.webhooks_clear_logs',
+    method: 'yellow.webhooks_clear_logs',
   });
 }
 
@@ -83,7 +83,7 @@ export async function openhumanWebhooksRegisterEcho(
   return await callCoreRpc<
     CommandResponse<{ result: { registrations: WebhookDebugRegistration[] } }>
   >({
-    method: 'openhuman.webhooks_register_echo',
+    method: 'yellow.webhooks_register_echo',
     params: {
       tunnel_uuid: tunnelUuid,
       tunnel_name: tunnelName ?? null,
@@ -100,5 +100,5 @@ export async function openhumanWebhooksUnregisterEcho(
   }
   return await callCoreRpc<
     CommandResponse<{ result: { registrations: WebhookDebugRegistration[] } }>
-  >({ method: 'openhuman.webhooks_unregister_echo', params: { tunnel_uuid: tunnelUuid } });
+  >({ method: 'yellow.webhooks_unregister_echo', params: { tunnel_uuid: tunnelUuid } });
 }
