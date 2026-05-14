@@ -4,7 +4,7 @@
  *
  * Verifies the full auth + onboarding journey using mock data:
  *   Phase 1 — Deep link authentication:
- *     1. `openhuman://auth?token=...` deep link is triggered via __simulateDeepLink
+ *     1. `Yellow://auth?token=...` deep link is triggered via __simulateDeepLink
  *     2. App calls POST /telegram/login-tokens/:token/consume  (mock server)
  *     3. App receives JWT, dispatches to Redux authSlice
  *     4. UserProvider calls GET /auth/me  (mock server)
@@ -24,7 +24,7 @@
  *     - Invalid token returns 401 and app does not navigate to home
  *
  *   Phase 5 — Bypass auth path:
- *     - `openhuman://auth?token=...&key=auth` sets token directly (no consume call)
+ *     - `Yellow://auth?token=...&key=auth` sets token directly (no consume call)
  *
  * The mock server runs on http://127.0.0.1:18473 and the .app bundle must
  * have been built with VITE_BACKEND_URL pointing there.
@@ -328,7 +328,7 @@ describe('Login flow — complete with mock data (Linux)', () => {
       'Good morning',
       'Good afternoon',
       'Good evening',
-      'Message OpenHuman',
+      'Message Yellow',
       'Upgrade to Premium',
     ];
 
@@ -356,7 +356,7 @@ describe('Login flow — complete with mock data (Linux)', () => {
     clearRequestLog();
     setMockBehavior('token', 'expired');
 
-    await triggerDeepLink('openhuman://auth?token=expired-test-token');
+    await triggerDeepLink('Yellow://auth?token=expired-test-token');
     await browser.pause(5_000);
 
     // Verify the consume call was made (mock returns 401 for expired tokens)
@@ -373,7 +373,7 @@ describe('Login flow — complete with mock data (Linux)', () => {
     clearRequestLog();
     setMockBehavior('token', 'invalid');
 
-    await triggerDeepLink('openhuman://auth?token=invalid-test-token');
+    await triggerDeepLink('Yellow://auth?token=invalid-test-token');
     await browser.pause(5_000);
 
     // Verify the consume call was made (mock returns 401 for invalid tokens)
@@ -401,7 +401,7 @@ describe('Login flow — complete with mock data (Linux)', () => {
     const bypassJwt = buildBypassJwt('e2e-bypass-user');
 
     // Trigger bypass deep link (key=auth skips token consume)
-    await triggerDeepLink(`openhuman://auth?token=${encodeURIComponent(bypassJwt)}&key=auth`);
+    await triggerDeepLink(`Yellow://auth?token=${encodeURIComponent(bypassJwt)}&key=auth`);
     await browser.pause(5_000);
 
     // Assert NO consume call was made (bypass skips it)
@@ -416,7 +416,7 @@ describe('Login flow — complete with mock data (Linux)', () => {
       'Good morning',
       'Good afternoon',
       'Good evening',
-      'Message OpenHuman',
+      'Message Yellow',
       'Home',
     ];
     const foundHome = await waitForAnyText(homeCandidates, 15_000);
