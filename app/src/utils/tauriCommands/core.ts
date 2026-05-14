@@ -251,24 +251,24 @@ export const installAppUpdate = async (): Promise<void> => {
   console.debug('[app-update] installAppUpdate: returned (install did not relaunch)');
 };
 
-export async function resetYellowDataAndRestartCore(): Promise<void> {
+export async function yellowResetDataAndRestartCore(): Promise<void> {
   if (!isTauri()) {
-    console.debug('[core] resetYellowDataAndRestartCore: skipped — not running in Tauri');
+    console.debug('[core] yellowResetDataAndRestartCore: skipped — not running in Tauri');
     return;
   }
   console.debug(
-    '[core] resetYellowDataAndRestartCore: invoking yellow.config_reset_local_data'
+    '[core] yellowResetDataAndRestartCore: invoking yellow.config_reset_local_data'
   );
   await callCoreRpc({ method: 'yellow.config_reset_local_data' });
   console.debug(
-    '[core] resetYellowDataAndRestartCore: local data reset complete, restarting core'
+    '[core] yellowResetDataAndRestartCore: local data reset complete, restarting core'
   );
   await restartCoreProcess();
-  console.debug('[core] resetYellowDataAndRestartCore: done');
+  console.debug('[core] yellowResetDataAndRestartCore: done');
 }
 
 /** Read onboarding_completed from core config. */
-export async function getOnboardingCompleted(): Promise<boolean> {
+export async function yellowGetOnboardingCompleted(): Promise<boolean> {
   if (!isTauri()) return false;
   const res = await callCoreRpc<boolean | { result: boolean }>({
     method: 'yellow.config_get_onboarding_completed',
@@ -280,7 +280,7 @@ export async function getOnboardingCompleted(): Promise<boolean> {
 }
 
 /** Write onboarding_completed to core config. */
-export async function setOnboardingCompleted(value: boolean): Promise<boolean> {
+export async function yellowSetOnboardingCompleted(value: boolean): Promise<boolean> {
   if (!isTauri()) return false;
   const res = await callCoreRpc<boolean | { result: boolean }>({
     method: 'yellow.config_set_onboarding_completed',
