@@ -1,25 +1,5 @@
 <p align="center">
-  <svg width="400" height="100" viewBox="0 0 400 100" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="yellowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" style="stop-color:#FFF700;stop-opacity:1" />
-        <stop offset="100%" style="stop-color:#FFAA00;stop-opacity:1" />
-      </linearGradient>
-      <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-        <stop offset="0%" style="stop-color:#FFF700;stop-opacity:1" />
-        <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
-        <feOffset dx="2" dy="2" result="offsetblur" />
-        <feComponentTransfer>
-          <feFuncA type="linear" slope="0.5" />
-        </feComponentTransfer>
-        <feMerge>
-          <feMergeNode />
-          <feMergeNode in="SourceGraphic" />
-        </feMerge>
-      </filter>
-    </defs>
-    <text x="50%" y="70%" text-anchor="middle" font-family="'Outfit', 'Inter', sans-serif" font-size="80" font-weight="900" fill="url(#yellowGradient)" filter="url(#shadow)">YELLOW</text>
-  </svg>
+  <img src="./YellowTitle.png" alt="Yellow" width="600" />
 </p>
 
 <p align="center">
