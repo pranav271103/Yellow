@@ -56,18 +56,18 @@ export interface VoiceServerSettings {
   custom_dictionary: string[];
 }
 
-export async function YellowVoiceStatus(): Promise<VoiceStatus> {
+export async function yellowVoiceStatus(): Promise<VoiceStatus> {
   return await callCoreRpc<VoiceStatus>({ method: 'yellow.voice_status', params: {} });
 }
 
-export async function YellowVoiceServerStatus(): Promise<VoiceServerStatus> {
+export async function yellowVoiceServerStatus(): Promise<VoiceServerStatus> {
   return await callCoreRpc<VoiceServerStatus>({
     method: 'yellow.voice_server_status',
     params: {},
   });
 }
 
-export async function YellowVoiceServerStart(params?: {
+export async function yellowVoiceServerStart(params?: {
   hotkey?: string;
   activation_mode?: 'tap' | 'push';
   skip_cleanup?: boolean;
@@ -78,14 +78,14 @@ export async function YellowVoiceServerStart(params?: {
   });
 }
 
-export async function YellowVoiceServerStop(): Promise<VoiceServerStatus> {
+export async function yellowVoiceServerStop(): Promise<VoiceServerStatus> {
   return await callCoreRpc<VoiceServerStatus>({
     method: 'yellow.voice_server_stop',
     params: {},
   });
 }
 
-export async function YellowGetVoiceServerSettings(): Promise<
+export async function yellowGetVoiceServerSettings(): Promise<
   CommandResponse<VoiceServerSettings>
 > {
   return await callCoreRpc<CommandResponse<VoiceServerSettings>>({
@@ -94,7 +94,7 @@ export async function YellowGetVoiceServerSettings(): Promise<
   });
 }
 
-export async function YellowUpdateVoiceServerSettings(update: {
+export async function yellowUpdateVoiceServerSettings(update: {
   auto_start?: boolean;
   hotkey?: string;
   activation_mode?: 'tap' | 'push';
@@ -109,7 +109,7 @@ export async function YellowUpdateVoiceServerSettings(update: {
   });
 }
 
-export async function YellowVoiceTranscribe(
+export async function yellowVoiceTranscribe(
   audioPath: string,
   context?: string,
   skipCleanup?: boolean
@@ -120,7 +120,7 @@ export async function YellowVoiceTranscribe(
   });
 }
 
-export async function YellowVoiceTranscribeBytes(
+export async function yellowVoiceTranscribeBytes(
   audioBytes: number[],
   extension?: string,
   context?: string,
@@ -132,7 +132,7 @@ export async function YellowVoiceTranscribeBytes(
   });
 }
 
-export async function YellowVoiceTts(
+export async function yellowVoiceTts(
   text: string,
   outputPath?: string
 ): Promise<VoiceTtsResult> {
