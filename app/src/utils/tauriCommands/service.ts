@@ -36,7 +36,7 @@ export async function openhumanServiceInstall(): Promise<CommandResponse<Service
   }
   try {
     return await callCoreRpc<CommandResponse<ServiceStatus>>({
-      method: 'openhuman.service_install',
+      method: 'yellow.service_install',
     });
   } catch {
     const raw = await invoke<string>('service_install_direct');
@@ -49,7 +49,7 @@ export async function openhumanServiceStart(): Promise<CommandResponse<ServiceSt
     throw new Error('Not running in Tauri');
   }
   try {
-    return await callCoreRpc<CommandResponse<ServiceStatus>>({ method: 'openhuman.service_start' });
+    return await callCoreRpc<CommandResponse<ServiceStatus>>({ method: 'yellow.service_start' });
   } catch {
     const raw = await invoke<string>('service_start_direct');
     return parseServiceCliOutput<ServiceStatus>(raw);
@@ -61,7 +61,7 @@ export async function openhumanServiceStop(): Promise<CommandResponse<ServiceSta
     throw new Error('Not running in Tauri');
   }
   try {
-    return await callCoreRpc<CommandResponse<ServiceStatus>>({ method: 'openhuman.service_stop' });
+    return await callCoreRpc<CommandResponse<ServiceStatus>>({ method: 'yellow.service_stop' });
   } catch {
     const raw = await invoke<string>('service_stop_direct');
     return parseServiceCliOutput<ServiceStatus>(raw);
@@ -74,7 +74,7 @@ export async function openhumanServiceStatus(): Promise<CommandResponse<ServiceS
   }
   try {
     return await callCoreRpc<CommandResponse<ServiceStatus>>({
-      method: 'openhuman.service_status',
+      method: 'yellow.service_status',
     });
   } catch {
     const raw = await invoke<string>('service_status_direct');
@@ -88,7 +88,7 @@ export async function openhumanServiceUninstall(): Promise<CommandResponse<Servi
   }
   try {
     return await callCoreRpc<CommandResponse<ServiceStatus>>({
-      method: 'openhuman.service_uninstall',
+      method: 'yellow.service_uninstall',
     });
   } catch {
     const raw = await invoke<string>('service_uninstall_direct');
@@ -104,7 +104,7 @@ export async function openhumanServiceRestart(
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<RestartStatus>>({
-    method: 'openhuman.service_restart',
+    method: 'yellow.service_restart',
     params: { source, reason },
   });
 }
@@ -114,7 +114,7 @@ export async function openhumanAgentServerStatus(): Promise<CommandResponse<Agen
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<AgentServerStatus>>({
-    method: 'openhuman.agent_server_status',
+    method: 'yellow.agent_server_status',
   });
 }
 
@@ -123,7 +123,7 @@ export async function openhumanGetDaemonHostConfig(): Promise<CommandResponse<Da
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<DaemonHostConfig>>({
-    method: 'openhuman.service_daemon_host_get',
+    method: 'yellow.service_daemon_host_get',
   });
 }
 
@@ -134,7 +134,7 @@ export async function openhumanSetDaemonHostConfig(
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<DaemonHostConfig>>({
-    method: 'openhuman.service_daemon_host_set',
+    method: 'yellow.service_daemon_host_set',
     params: { show_tray: showTray },
   });
 }
