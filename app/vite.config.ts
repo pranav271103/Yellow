@@ -155,7 +155,7 @@ export default defineConfig(async () => ({
     // unaffected.
     host: host || true,
     allowedHosts: [
-      "frontend-runner-openhuman-git-main-vezuresxyz.vercel.app",
+      "frontend-runner-yellow-git-main-vezuresxyz.vercel.app",
     ],
     hmr: host
       ? {
