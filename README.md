@@ -1,4 +1,4 @@
-<h1 align="center">Yellow</h1>
+<h1 align="center" style="color: #FFD700; font-family: 'Outfit', 'Inter', sans-serif; font-size: 4rem; font-weight: 800;">Yellow</h1>
 
 <p align="center">
   <strong>Yellow is your Personal AI super intelligence. Private, Simple and extremely powerful.</strong>
