@@ -9,27 +9,27 @@ vi.mock('../../services/coreRpcClient', () => ({ callCoreRpc: vi.fn() }));
 describe('tauriCommands/config', () => {
   const mockIsTauri = isTauri as Mock;
   const mockCallCoreRpc = callCoreRpc as Mock;
-  let YellowUpdateLocalAiSettings: typeof import('./config').YellowUpdateLocalAiSettings;
-  let YellowUpdateMeetSettings: typeof import('./config').YellowUpdateMeetSettings;
-  let YellowGetMeetSettings: typeof import('./config').YellowGetMeetSettings;
+  let yellowUpdateLocalAiSettings: typeof import('./config').yellowUpdateLocalAiSettings;
+  let yellowUpdateMeetSettings: typeof import('./config').yellowUpdateMeetSettings;
+  let yellowGetMeetSettings: typeof import('./config').yellowGetMeetSettings;
 
   beforeEach(async () => {
     vi.clearAllMocks();
     mockIsTauri.mockReturnValue(true);
     const actual = await vi.importActual<typeof import('./config')>('./config');
-    YellowUpdateLocalAiSettings = actual.YellowUpdateLocalAiSettings;
-    YellowUpdateMeetSettings = actual.YellowUpdateMeetSettings;
-    YellowGetMeetSettings = actual.YellowGetMeetSettings;
+    yellowUpdateLocalAiSettings = actual.yellowUpdateLocalAiSettings;
+    yellowUpdateMeetSettings = actual.yellowUpdateMeetSettings;
+    yellowGetMeetSettings = actual.yellowGetMeetSettings;
   });
 
   afterEach(() => {
     vi.restoreAllMocks();
   });
 
-  describe('YellowUpdateLocalAiSettings', () => {
+  describe('yellowUpdateLocalAiSettings', () => {
     test('throws when not running in Tauri', async () => {
       mockIsTauri.mockReturnValue(false);
-      await expect(YellowUpdateLocalAiSettings({ runtime_enabled: true })).rejects.toThrow(
+      await expect(yellowUpdateLocalAiSettings({ runtime_enabled: true })).rejects.toThrow(
         'Not running in Tauri'
       );
       expect(mockCallCoreRpc).not.toHaveBeenCalled();
@@ -41,7 +41,7 @@ describe('tauriCommands/config', () => {
         logs: [],
       });
       const patch = { runtime_enabled: true, usage_embeddings: true, usage_subconscious: false };
-      await YellowUpdateLocalAiSettings(patch);
+      await yellowUpdateLocalAiSettings(patch);
       expect(mockCallCoreRpc).toHaveBeenCalledWith({
         method: 'yellow.config_update_local_ai_settings',
         params: patch,
@@ -49,11 +49,11 @@ describe('tauriCommands/config', () => {
     });
   });
 
-  describe('YellowUpdateMeetSettings (#1299)', () => {
+  describe('yellowUpdateMeetSettings (#1299)', () => {
     test('throws when not running in Tauri', async () => {
       mockIsTauri.mockReturnValue(false);
       await expect(
-        YellowUpdateMeetSettings({ auto_orchestrator_handoff: true })
+        yellowUpdateMeetSettings({ auto_orchestrator_handoff: true })
       ).rejects.toThrow('Not running in Tauri');
       expect(mockCallCoreRpc).not.toHaveBeenCalled();
     });
@@ -63,7 +63,7 @@ describe('tauriCommands/config', () => {
         result: { config: {}, workspace_dir: '/tmp', config_path: '/tmp/cfg.toml' },
         logs: [],
       });
-      await YellowUpdateMeetSettings({ auto_orchestrator_handoff: true });
+      await yellowUpdateMeetSettings({ auto_orchestrator_handoff: true });
       expect(mockCallCoreRpc).toHaveBeenCalledWith({
         method: 'yellow.config_update_meet_settings',
         params: { auto_orchestrator_handoff: true },
@@ -71,16 +71,16 @@ describe('tauriCommands/config', () => {
     });
   });
 
-  describe('YellowGetMeetSettings (#1299)', () => {
+  describe('yellowGetMeetSettings (#1299)', () => {
     test('throws when not running in Tauri', async () => {
       mockIsTauri.mockReturnValue(false);
-      await expect(YellowGetMeetSettings()).rejects.toThrow('Not running in Tauri');
+      await expect(yellowGetMeetSettings()).rejects.toThrow('Not running in Tauri');
       expect(mockCallCoreRpc).not.toHaveBeenCalled();
     });
 
     test('reads via yellow.config_get_meet_settings', async () => {
       mockCallCoreRpc.mockResolvedValue({ result: { auto_orchestrator_handoff: true }, logs: [] });
-      const out = await YellowGetMeetSettings();
+      const out = await yellowGetMeetSettings();
       expect(mockCallCoreRpc).toHaveBeenCalledWith({
         method: 'yellow.config_get_meet_settings',
       });
@@ -88,18 +88,18 @@ describe('tauriCommands/config', () => {
     });
   });
 
-  describe('YellowUpdateComposioTriggerSettings', () => {
-    let YellowUpdateComposioTriggerSettings: typeof import('./config').YellowUpdateComposioTriggerSettings;
+  describe('yellowUpdateComposioTriggerSettings', () => {
+    let yellowUpdateComposioTriggerSettings: typeof import('./config').yellowUpdateComposioTriggerSettings;
 
     beforeEach(async () => {
       const actual = await vi.importActual<typeof import('./config')>('./config');
-      YellowUpdateComposioTriggerSettings = actual.YellowUpdateComposioTriggerSettings;
+      yellowUpdateComposioTriggerSettings = actual.yellowUpdateComposioTriggerSettings;
     });
 
     test('throws when not running in Tauri', async () => {
       mockIsTauri.mockReturnValue(false);
       await expect(
-        YellowUpdateComposioTriggerSettings({ triage_disabled: true })
+        yellowUpdateComposioTriggerSettings({ triage_disabled: true })
       ).rejects.toThrow('Not running in Tauri');
       expect(mockCallCoreRpc).not.toHaveBeenCalled();
     });
@@ -110,7 +110,7 @@ describe('tauriCommands/config', () => {
         logs: [],
       });
       const patch = { triage_disabled: true, triage_disabled_toolkits: ['gmail', 'slack'] };
-      await YellowUpdateComposioTriggerSettings(patch);
+      await yellowUpdateComposioTriggerSettings(patch);
       expect(mockCallCoreRpc).toHaveBeenCalledWith({
         method: 'yellow.config_update_composio_trigger_settings',
         params: patch,
@@ -118,17 +118,17 @@ describe('tauriCommands/config', () => {
     });
   });
 
-  describe('YellowGetComposioTriggerSettings', () => {
-    let YellowGetComposioTriggerSettings: typeof import('./config').YellowGetComposioTriggerSettings;
+  describe('yellowGetComposioTriggerSettings', () => {
+    let yellowGetComposioTriggerSettings: typeof import('./config').yellowGetComposioTriggerSettings;
 
     beforeEach(async () => {
       const actual = await vi.importActual<typeof import('./config')>('./config');
-      YellowGetComposioTriggerSettings = actual.YellowGetComposioTriggerSettings;
+      yellowGetComposioTriggerSettings = actual.yellowGetComposioTriggerSettings;
     });
 
     test('throws when not running in Tauri', async () => {
       mockIsTauri.mockReturnValue(false);
-      await expect(YellowGetComposioTriggerSettings()).rejects.toThrow('Not running in Tauri');
+      await expect(yellowGetComposioTriggerSettings()).rejects.toThrow('Not running in Tauri');
       expect(mockCallCoreRpc).not.toHaveBeenCalled();
     });
 
@@ -137,7 +137,7 @@ describe('tauriCommands/config', () => {
         result: { triage_disabled: false, triage_disabled_toolkits: ['slack'] },
         logs: [],
       });
-      const out = await YellowGetComposioTriggerSettings();
+      const out = await yellowGetComposioTriggerSettings();
       expect(mockCallCoreRpc).toHaveBeenCalledWith({
         method: 'yellow.config_get_composio_trigger_settings',
       });
