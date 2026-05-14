@@ -68,7 +68,7 @@ export async function restartCoreProcess(): Promise<void> {
  * Tauri's `app.restart()` exits the cargo parent, which orphans/kills the
  * vite child and tears down the entire dev session (#1068). Use a webview
  * reload in dev mode instead — module init re-runs, so localStorage seeds
- * (e.g. `OPENHUMAN_ACTIVE_USER_ID`, set by `setActiveUserId` before the
+ * (e.g. `YELLOW_ACTIVE_USER_ID`, set by `setActiveUserId` before the
  * caller invokes us) are read fresh and redux-persist re-hydrates from
  * the active user's namespace, all without touching the cargo / vite
  * processes. Packaged builds keep the original `app.restart()` path —
@@ -89,7 +89,7 @@ export async function restartApp(): Promise<void> {
 }
 
 /**
- * Read the active user id from `~/.openhuman/active_user.toml` via Rust.
+ * Read the active user id from `~/.yellow/active_user.toml` via Rust.
  * Used at startup (before redux-persist hydrates) to seed
  * `userScopedStorage` from the profile-independent source of truth so
  * the UI always lands on the right user namespace, regardless of any
@@ -251,27 +251,27 @@ export const installAppUpdate = async (): Promise<void> => {
   console.debug('[app-update] installAppUpdate: returned (install did not relaunch)');
 };
 
-export async function resetOpenHumanDataAndRestartCore(): Promise<void> {
+export async function resetYellowDataAndRestartCore(): Promise<void> {
   if (!isTauri()) {
-    console.debug('[core] resetOpenHumanDataAndRestartCore: skipped — not running in Tauri');
+    console.debug('[core] resetYellowDataAndRestartCore: skipped — not running in Tauri');
     return;
   }
   console.debug(
-    '[core] resetOpenHumanDataAndRestartCore: invoking openhuman.config_reset_local_data'
+    '[core] resetYellowDataAndRestartCore: invoking yellow.config_reset_local_data'
   );
-  await callCoreRpc({ method: 'openhuman.config_reset_local_data' });
+  await callCoreRpc({ method: 'yellow.config_reset_local_data' });
   console.debug(
-    '[core] resetOpenHumanDataAndRestartCore: local data reset complete, restarting core'
+    '[core] resetYellowDataAndRestartCore: local data reset complete, restarting core'
   );
   await restartCoreProcess();
-  console.debug('[core] resetOpenHumanDataAndRestartCore: done');
+  console.debug('[core] resetYellowDataAndRestartCore: done');
 }
 
 /** Read onboarding_completed from core config. */
 export async function getOnboardingCompleted(): Promise<boolean> {
   if (!isTauri()) return false;
   const res = await callCoreRpc<boolean | { result: boolean }>({
-    method: 'openhuman.config_get_onboarding_completed',
+    method: 'yellow.config_get_onboarding_completed',
   });
   // RpcOutcome may wrap value in { result, logs } when logs are present
   if (typeof res === 'boolean') return res;
@@ -283,7 +283,7 @@ export async function getOnboardingCompleted(): Promise<boolean> {
 export async function setOnboardingCompleted(value: boolean): Promise<boolean> {
   if (!isTauri()) return false;
   const res = await callCoreRpc<boolean | { result: boolean }>({
-    method: 'openhuman.config_set_onboarding_completed',
+    method: 'yellow.config_set_onboarding_completed',
     params: { value },
   });
   if (typeof res === 'boolean') return res;
@@ -291,26 +291,26 @@ export async function setOnboardingCompleted(value: boolean): Promise<boolean> {
   return false;
 }
 
-export async function openhumanDoctorReport(): Promise<CommandResponse<DoctorReport>> {
+export async function yellowDoctorReport(): Promise<CommandResponse<DoctorReport>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
-  return await callCoreRpc<CommandResponse<DoctorReport>>({ method: 'openhuman.doctor_report' });
+  return await callCoreRpc<CommandResponse<DoctorReport>>({ method: 'yellow.doctor_report' });
 }
 
-export async function openhumanDoctorModels(
+export async function yellowDoctorModels(
   useCache = true
 ): Promise<CommandResponse<ModelProbeReport>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<ModelProbeReport>>({
-    method: 'openhuman.doctor_models',
+    method: 'yellow.doctor_models',
     params: { use_cache: useCache },
   });
 }
 
-export async function openhumanMigrateOpenclaw(
+export async function yellowMigrateLegacy(
   sourceWorkspace?: string,
   dryRun = true
 ): Promise<CommandResponse<MigrationReport>> {
@@ -318,7 +318,7 @@ export async function openhumanMigrateOpenclaw(
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<MigrationReport>>({
-    method: 'openhuman.migrate_openclaw',
+    method: 'yellow.migrate_openclaw',
     params: { source_workspace: sourceWorkspace, dry_run: dryRun },
   });
 }
