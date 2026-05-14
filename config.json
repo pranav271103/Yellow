@@ -1,0 +1,95 @@
+{
+  "auth": {
+    "isAuthenticated": true,
+    "userId": "local-user",
+    "user": {
+      "_id": "local-user",
+      "name": "Local User",
+      "email": "local@openhuman.v1"
+    },
+    "profileId": "local-profile"
+  },
+  "sessionToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJsb2NhbC11c2VyIiwibmFtZSI6IkxvY2FsIFVzZXIifQ.fake-sig",
+  "currentUser": {
+    "_id": "local-user",
+    "name": "Local User"
+  },
+  "onboardingCompleted": true,
+  "chatOnboardingCompleted": true,
+  "analyticsEnabled": false,
+  "meetAutoOrchestratorHandoff": false,
+  "localState": {
+    "encryptionKey": null,
+    "onboardingTasks": null
+  },
+  "runtime": {
+    "screenIntelligence": {
+      "status": "running",
+      "error": null
+    },
+    "localAi": {
+      "status": "running",
+      "error": null
+    },
+    "autocomplete": {
+      "status": "running",
+      "error": null
+    },
+    "service": {
+      "status": "running",
+      "error": null
+    }
+  },
+  "api_url": "http://localhost:8000",
+  "api_key": "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",
+  "default_model": "meta/llama-3.3-70b-instruct",
+  "default_temperature": 0.7,
+  "models": [
+    {
+      "id": "meta/llama-3.3-70b-instruct",
+      "name": "Llama 3.3 70B"
+    },
+    {
+      "id": "meta/llama-3.1-8b-instruct",
+      "name": "Llama 3.1 8B"
+    },
+    {
+      "id": "nvidia/llama-3.1-nemotron-70b-instruct",
+      "name": "Nemotron 70B"
+    },
+    {
+      "id": "google/gemma-2-27b-it",
+      "name": "Gemma 2 27B"
+    }
+  ],
+  "current_tier": "disabled",
+  "local_ai": {
+    "runtime_enabled": false,
+    "usage": {
+      "embeddings": false,
+      "heartbeat": false,
+      "learning_reflection": false,
+      "subconscious": false
+    }
+  },
+  "tools": {
+    "web_search": {
+      "enabled": true
+    },
+    "computer_control": {
+      "enabled": true
+    },
+    "file_access": {
+      "enabled": true
+    },
+    "shell": {
+      "enabled": true
+    },
+    "browser": {
+      "enabled": true
+    },
+    "vision": {
+      "enabled": true
+    }
+  }
+}
