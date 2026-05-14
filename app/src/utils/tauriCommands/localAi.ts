@@ -237,7 +237,7 @@ export async function openhumanAgentChat(
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<string>>({
-    method: 'openhuman.agent_chat',
+    method: 'yellow.agent_chat',
     params: { message, model_override: modelOverride, temperature },
   });
 }
@@ -245,11 +245,11 @@ export async function openhumanAgentChat(
 export async function openhumanLocalAiStatus(): Promise<CommandResponse<LocalAiStatus>> {
   try {
     return await callCoreRpc<CommandResponse<LocalAiStatus>>({
-      method: 'openhuman.local_ai_status',
+      method: 'yellow.local_ai_status',
     });
   } catch (err) {
     const message = tauriErrorMessage(err);
-    if (message.includes('unknown method: openhuman.local_ai_status')) {
+    if (message.includes('unknown method: yellow.local_ai_status')) {
       throw new Error(
         'Local model runtime is unavailable in this core build. Restart app after updating to the latest build.'
       );
@@ -263,12 +263,12 @@ export async function openhumanLocalAiDownload(
 ): Promise<CommandResponse<LocalAiStatus>> {
   try {
     return await callCoreRpc<CommandResponse<LocalAiStatus>>({
-      method: 'openhuman.local_ai_download',
+      method: 'yellow.local_ai_download',
       params: { force: force ?? false },
     });
   } catch (err) {
     const message = tauriErrorMessage(err);
-    if (message.includes('unknown method: openhuman.local_ai_download')) {
+    if (message.includes('unknown method: yellow.local_ai_download')) {
       return await openhumanLocalAiStatus();
     }
     throw new Error(message);
@@ -279,7 +279,7 @@ export async function openhumanLocalAiDownloadAllAssets(
   force?: boolean
 ): Promise<CommandResponse<LocalAiDownloadsProgress>> {
   return await callCoreRpc<CommandResponse<LocalAiDownloadsProgress>>({
-    method: 'openhuman.local_ai_download_all_assets',
+    method: 'yellow.local_ai_download_all_assets',
     params: { force: force ?? false },
   });
 }
@@ -289,7 +289,7 @@ export async function openhumanLocalAiSummarize(
   maxTokens?: number
 ): Promise<CommandResponse<string>> {
   return await callCoreRpc<CommandResponse<string>>({
-    method: 'openhuman.local_ai_summarize',
+    method: 'yellow.local_ai_summarize',
     params: { text, max_tokens: maxTokens },
   });
 }
@@ -300,7 +300,7 @@ export async function openhumanLocalAiPrompt(
   noThink?: boolean
 ): Promise<CommandResponse<string>> {
   return await callCoreRpc<CommandResponse<string>>({
-    method: 'openhuman.local_ai_prompt',
+    method: 'yellow.local_ai_prompt',
     params: { prompt, max_tokens: maxTokens, no_think: noThink },
   });
 }
@@ -311,7 +311,7 @@ export async function openhumanLocalAiVisionPrompt(
   maxTokens?: number
 ): Promise<CommandResponse<string>> {
   return await callCoreRpc<CommandResponse<string>>({
-    method: 'openhuman.local_ai_vision_prompt',
+    method: 'yellow.local_ai_vision_prompt',
     params: { prompt, image_refs: imageRefs, max_tokens: maxTokens },
   });
 }
@@ -320,7 +320,7 @@ export async function openhumanLocalAiEmbed(
   inputs: string[]
 ): Promise<CommandResponse<LocalAiEmbeddingResult>> {
   return await callCoreRpc<CommandResponse<LocalAiEmbeddingResult>>({
-    method: 'openhuman.local_ai_embed',
+    method: 'yellow.local_ai_embed',
     params: { inputs },
   });
 }
@@ -329,7 +329,7 @@ export async function openhumanLocalAiTranscribe(
   audioPath: string
 ): Promise<CommandResponse<LocalAiSpeechResult>> {
   return await callCoreRpc<CommandResponse<LocalAiSpeechResult>>({
-    method: 'openhuman.local_ai_transcribe',
+    method: 'yellow.local_ai_transcribe',
     params: { audio_path: audioPath },
   });
 }
@@ -339,7 +339,7 @@ export async function openhumanLocalAiTranscribeBytes(
   extension?: string
 ): Promise<CommandResponse<LocalAiSpeechResult>> {
   return await callCoreRpc<CommandResponse<LocalAiSpeechResult>>({
-    method: 'openhuman.local_ai_transcribe_bytes',
+    method: 'yellow.local_ai_transcribe_bytes',
     params: { audio_bytes: audioBytes, extension },
   });
 }
@@ -349,7 +349,7 @@ export async function openhumanLocalAiTts(
   outputPath?: string
 ): Promise<CommandResponse<LocalAiTtsResult>> {
   return await callCoreRpc<CommandResponse<LocalAiTtsResult>>({
-    method: 'openhuman.local_ai_tts',
+    method: 'yellow.local_ai_tts',
     params: { text, output_path: outputPath },
   });
 }
@@ -362,7 +362,7 @@ export async function openhumanLocalAiChat(
   maxTokens?: number
 ): Promise<CommandResponse<string>> {
   return await callCoreRpc<CommandResponse<string>>({
-    method: 'openhuman.local_ai_chat',
+    method: 'yellow.local_ai_chat',
     params: { messages, max_tokens: maxTokens },
   });
 }
@@ -376,7 +376,7 @@ export async function openhumanLocalAiShouldReact(
   channelType: string
 ): Promise<CommandResponse<ReactionDecision>> {
   return await callCoreRpc<CommandResponse<ReactionDecision>>({
-    method: 'openhuman.local_ai_should_react',
+    method: 'yellow.local_ai_should_react',
     params: { message, channel_type: channelType },
   });
 }
@@ -388,7 +388,7 @@ export async function openhumanLocalAiAnalyzeSentiment(
   message: string
 ): Promise<CommandResponse<SentimentResult>> {
   return await callCoreRpc<CommandResponse<SentimentResult>>({
-    method: 'openhuman.local_ai_analyze_sentiment',
+    method: 'yellow.local_ai_analyze_sentiment',
     params: { message },
   });
 }
@@ -401,7 +401,7 @@ export async function openhumanLocalAiShouldSendGif(
   channelType: string
 ): Promise<CommandResponse<GifDecision>> {
   return await callCoreRpc<CommandResponse<GifDecision>>({
-    method: 'openhuman.local_ai_should_send_gif',
+    method: 'yellow.local_ai_should_send_gif',
     params: { message, channel_type: channelType },
   });
 }
@@ -414,7 +414,7 @@ export async function openhumanLocalAiTenorSearch(
   limit?: number
 ): Promise<CommandResponse<TenorSearchResult>> {
   return await callCoreRpc<CommandResponse<TenorSearchResult>>({
-    method: 'openhuman.local_ai_tenor_search',
+    method: 'yellow.local_ai_tenor_search',
     params: { query, limit },
   });
 }
@@ -423,7 +423,7 @@ export async function openhumanLocalAiAssetsStatus(): Promise<
   CommandResponse<LocalAiAssetsStatus>
 > {
   return await callCoreRpc<CommandResponse<LocalAiAssetsStatus>>({
-    method: 'openhuman.local_ai_assets_status',
+    method: 'yellow.local_ai_assets_status',
   });
 }
 
@@ -431,7 +431,7 @@ export async function openhumanLocalAiDownloadsProgress(): Promise<
   CommandResponse<LocalAiDownloadsProgress>
 > {
   return await callCoreRpc<CommandResponse<LocalAiDownloadsProgress>>({
-    method: 'openhuman.local_ai_downloads_progress',
+    method: 'yellow.local_ai_downloads_progress',
   });
 }
 
@@ -439,29 +439,29 @@ export async function openhumanLocalAiDownloadAsset(
   capability: 'chat' | 'vision' | 'embedding' | 'stt' | 'tts'
 ): Promise<CommandResponse<LocalAiAssetsStatus>> {
   return await callCoreRpc<CommandResponse<LocalAiAssetsStatus>>({
-    method: 'openhuman.local_ai_download_asset',
+    method: 'yellow.local_ai_download_asset',
     params: { capability },
   });
 }
 
 export async function openhumanLocalAiDeviceProfile(): Promise<DeviceProfileResult> {
-  return await callCoreRpc<DeviceProfileResult>({ method: 'openhuman.local_ai_device_profile' });
+  return await callCoreRpc<DeviceProfileResult>({ method: 'yellow.local_ai_device_profile' });
 }
 
 export async function openhumanLocalAiPresets(): Promise<PresetsResponse> {
-  return await callCoreRpc<PresetsResponse>({ method: 'openhuman.local_ai_presets' });
+  return await callCoreRpc<PresetsResponse>({ method: 'yellow.local_ai_presets' });
 }
 
 export async function openhumanLocalAiApplyPreset(tier: string): Promise<ApplyPresetResult> {
   return await callCoreRpc<ApplyPresetResult>({
-    method: 'openhuman.local_ai_apply_preset',
+    method: 'yellow.local_ai_apply_preset',
     params: { tier },
   });
 }
 
 export async function openhumanLocalAiDiagnostics(): Promise<LocalAiDiagnostics> {
   return await callCoreRpc<LocalAiDiagnostics>({
-    method: 'openhuman.local_ai_diagnostics',
+    method: 'yellow.local_ai_diagnostics',
     params: {},
   });
 }
@@ -470,7 +470,7 @@ export async function openhumanLocalAiSetOllamaPath(
   path: string
 ): Promise<{ ollama_binary_path: string | null; status: LocalAiStatus }> {
   return await callCoreRpc<{ ollama_binary_path: string | null; status: LocalAiStatus }>({
-    method: 'openhuman.local_ai_set_ollama_path',
+    method: 'yellow.local_ai_set_ollama_path',
     params: { path },
   });
 }
