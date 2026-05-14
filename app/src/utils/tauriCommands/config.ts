@@ -138,7 +138,7 @@ export async function openhumanGetClientConfig(): Promise<CommandResponse<Client
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<ClientConfig>>({
-    method: 'openhuman.config_get_client_config',
+    method: 'yellow.config_get_client_config',
   });
 }
 
@@ -209,7 +209,7 @@ export async function openhumanUpdateLocalAiSettings(
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<ConfigSnapshot>>({
-    method: 'openhuman.config_update_local_ai_settings',
+    method: 'yellow.config_update_local_ai_settings',
     params: update,
   });
 }
@@ -244,7 +244,7 @@ export async function openhumanUpdateMeetSettings(update: {
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<ConfigSnapshot>>({
-    method: 'openhuman.config_update_meet_settings',
+    method: 'yellow.config_update_meet_settings',
     params: update,
   });
 }
@@ -256,7 +256,7 @@ export async function openhumanGetMeetSettings(): Promise<
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<{ auto_orchestrator_handoff: boolean }>>({
-    method: 'openhuman.config_get_meet_settings',
+    method: 'yellow.config_get_meet_settings',
   });
 }
 
@@ -277,7 +277,7 @@ export async function openhumanUpdateComposioTriggerSettings(
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<ConfigSnapshot>>({
-    method: 'openhuman.config_update_composio_trigger_settings',
+    method: 'yellow.config_update_composio_trigger_settings',
     params: update,
   });
 }
@@ -289,7 +289,7 @@ export async function openhumanGetComposioTriggerSettings(): Promise<
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<ComposioTriggerSettings>>({
-    method: 'openhuman.config_get_composio_trigger_settings',
+    method: 'yellow.config_get_composio_trigger_settings',
   });
 }
 
