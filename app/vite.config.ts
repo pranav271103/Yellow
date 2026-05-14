@@ -23,8 +23,8 @@ function computeSentryRelease(): string {
   if (raw) return raw;
   const sha = (process.env.VITE_BUILD_SHA ?? "").trim().slice(0, 12);
   return sha
-    ? `openhuman@${pkg.version}+${sha}`
-    : `openhuman@${pkg.version}`;
+    ? `yellow@${pkg.version}+${sha}`
+    : `yellow@${pkg.version}`;
 }
 
 // Gate source-map upload on the presence of SENTRY_AUTH_TOKEN so local dev
@@ -71,7 +71,7 @@ function maybeSentryPlugin(): PluginOption | null {
 
 function guardCefRelListSupportsPlugin(): PluginOption {
   return {
-    name: "openhuman:guard-cef-rel-list-supports",
+    name: "yellow:guard-cef-rel-list-supports",
     enforce: "post",
     renderChunk(code) {
       const unsafe =
@@ -84,13 +84,13 @@ function guardCefRelListSupportsPlugin(): PluginOption {
   };
 }
 
-// `VITE_OPENHUMAN_TARGET=web` switches the build to the browser-hosted
+// `VITE_YELLOW_TARGET=web` switches the build to the browser-hosted
 // flavor: output lands in `dist-web/` so the desktop build artifact in
 // `dist/` (consumed by `cargo tauri build`) is never clobbered, and the
-// `import.meta.env.VITE_OPENHUMAN_TARGET` value is exposed to runtime code
+// `import.meta.env.VITE_YELLOW_TARGET` value is exposed to runtime code
 // that wants a build-time signal in addition to the runtime `isTauri()`
 // check. Default (`undefined` / `desktop`) keeps the historical behavior.
-const buildTarget = (process.env.VITE_OPENHUMAN_TARGET ?? "desktop").trim();
+const buildTarget = (process.env.VITE_YELLOW_TARGET ?? "desktop").trim();
 const isWebTarget = buildTarget === "web";
 
 // https://vite.dev/config/
@@ -99,7 +99,7 @@ export default defineConfig(async () => ({
   publicDir: "../public",
   // Read env files from the repo root (not `app/src/`, which is the vite
   // `root` and would be the default `envDir`). Lets `pnpm dev:app` pick up
-  // `VITE_BACKEND_URL` / `VITE_OPENHUMAN_APP_ENV` from the same root `.env`
+  // `VITE_BACKEND_URL` / `VITE_YELLOW_APP_ENV` from the same root `.env`
   // the Rust shell uses, instead of needing a separate `app/.env.local`.
   // Without this, `import.meta.env.VITE_*` is empty in dev (Vite does not
   // inherit `process.env` for VITE_-prefixed vars), so `BACKEND_URL` falls
