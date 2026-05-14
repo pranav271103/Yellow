@@ -57,12 +57,12 @@ export interface VoiceServerSettings {
 }
 
 export async function openhumanVoiceStatus(): Promise<VoiceStatus> {
-  return await callCoreRpc<VoiceStatus>({ method: 'openhuman.voice_status', params: {} });
+  return await callCoreRpc<VoiceStatus>({ method: 'yellow.voice_status', params: {} });
 }
 
 export async function openhumanVoiceServerStatus(): Promise<VoiceServerStatus> {
   return await callCoreRpc<VoiceServerStatus>({
-    method: 'openhuman.voice_server_status',
+    method: 'yellow.voice_server_status',
     params: {},
   });
 }
@@ -73,14 +73,14 @@ export async function openhumanVoiceServerStart(params?: {
   skip_cleanup?: boolean;
 }): Promise<VoiceServerStatus> {
   return await callCoreRpc<VoiceServerStatus>({
-    method: 'openhuman.voice_server_start',
+    method: 'yellow.voice_server_start',
     params: params ?? {},
   });
 }
 
 export async function openhumanVoiceServerStop(): Promise<VoiceServerStatus> {
   return await callCoreRpc<VoiceServerStatus>({
-    method: 'openhuman.voice_server_stop',
+    method: 'yellow.voice_server_stop',
     params: {},
   });
 }
@@ -89,7 +89,7 @@ export async function openhumanGetVoiceServerSettings(): Promise<
   CommandResponse<VoiceServerSettings>
 > {
   return await callCoreRpc<CommandResponse<VoiceServerSettings>>({
-    method: 'openhuman.config_get_voice_server_settings',
+    method: 'yellow.config_get_voice_server_settings',
     params: {},
   });
 }
@@ -104,7 +104,7 @@ export async function openhumanUpdateVoiceServerSettings(update: {
   custom_dictionary?: string[];
 }): Promise<CommandResponse<ConfigSnapshot>> {
   return await callCoreRpc<CommandResponse<ConfigSnapshot>>({
-    method: 'openhuman.config_update_voice_server_settings',
+    method: 'yellow.config_update_voice_server_settings',
     params: update,
   });
 }
@@ -115,7 +115,7 @@ export async function openhumanVoiceTranscribe(
   skipCleanup?: boolean
 ): Promise<VoiceSpeechResult> {
   return await callCoreRpc<VoiceSpeechResult>({
-    method: 'openhuman.voice_transcribe',
+    method: 'yellow.voice_transcribe',
     params: { audio_path: audioPath, context, skip_cleanup: skipCleanup },
   });
 }
@@ -127,7 +127,7 @@ export async function openhumanVoiceTranscribeBytes(
   skipCleanup?: boolean
 ): Promise<VoiceSpeechResult> {
   return await callCoreRpc<VoiceSpeechResult>({
-    method: 'openhuman.voice_transcribe_bytes',
+    method: 'yellow.voice_transcribe_bytes',
     params: { audio_bytes: audioBytes, extension, context, skip_cleanup: skipCleanup },
   });
 }
@@ -137,7 +137,7 @@ export async function openhumanVoiceTts(
   outputPath?: string
 ): Promise<VoiceTtsResult> {
   return await callCoreRpc<VoiceTtsResult>({
-    method: 'openhuman.voice_tts',
+    method: 'yellow.voice_tts',
     params: { text, output_path: outputPath },
   });
 }
@@ -181,7 +181,7 @@ export const notifyOverlaySttState = (
 ): void => {
   void (async () => {
     try {
-      await callCoreRpc({ method: 'openhuman.overlay_stt_notify', params: { state, text } });
+      await callCoreRpc({ method: 'yellow.overlay_stt_notify', params: { state, text } });
     } catch (err: unknown) {
       console.debug('[overlay_stt_notify] fire-and-forget error:', err);
     }
