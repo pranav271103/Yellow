@@ -112,105 +112,105 @@ export interface AutocompleteClearHistoryResult {
   cleared: number;
 }
 
-export async function openhumanAutocompleteStatus(): Promise<CommandResponse<AutocompleteStatus>> {
+export async function YellowAutocompleteStatus(): Promise<CommandResponse<AutocompleteStatus>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<AutocompleteStatus>>({
-    method: 'openhuman.autocomplete_status',
+    method: 'yellow.autocomplete_status',
   });
 }
 
-export async function openhumanAutocompleteStart(
+export async function YellowAutocompleteStart(
   params?: AutocompleteStartParams
 ): Promise<CommandResponse<AutocompleteStartResult>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<AutocompleteStartResult>>({
-    method: 'openhuman.autocomplete_start',
+    method: 'yellow.autocomplete_start',
     params: params ?? {},
   });
 }
 
-export async function openhumanAutocompleteStop(
+export async function YellowAutocompleteStop(
   params?: AutocompleteStopParams
 ): Promise<CommandResponse<AutocompleteStopResult>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<AutocompleteStopResult>>({
-    method: 'openhuman.autocomplete_stop',
+    method: 'yellow.autocomplete_stop',
     params: params ?? {},
   });
 }
 
-export async function openhumanAutocompleteCurrent(
+export async function YellowAutocompleteCurrent(
   params?: AutocompleteCurrentParams
 ): Promise<CommandResponse<AutocompleteCurrentResult>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<AutocompleteCurrentResult>>({
-    method: 'openhuman.autocomplete_current',
+    method: 'yellow.autocomplete_current',
     params: params ?? {},
   });
 }
 
-export async function openhumanAutocompleteDebugFocus(): Promise<
+export async function YellowAutocompleteDebugFocus(): Promise<
   CommandResponse<AutocompleteDebugFocusResult>
 > {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<AutocompleteDebugFocusResult>>({
-    method: 'openhuman.autocomplete_debug_focus',
+    method: 'yellow.autocomplete_debug_focus',
   });
 }
 
-export async function openhumanAutocompleteAccept(
+export async function YellowAutocompleteAccept(
   params?: AutocompleteAcceptParams
 ): Promise<CommandResponse<AutocompleteAcceptResult>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<AutocompleteAcceptResult>>({
-    method: 'openhuman.autocomplete_accept',
+    method: 'yellow.autocomplete_accept',
     params: params ?? {},
   });
 }
 
-export async function openhumanAutocompleteSetStyle(
+export async function YellowAutocompleteSetStyle(
   params: AutocompleteSetStyleParams
 ): Promise<CommandResponse<AutocompleteSetStyleResult>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<AutocompleteSetStyleResult>>({
-    method: 'openhuman.autocomplete_set_style',
+    method: 'yellow.autocomplete_set_style',
     params,
   });
 }
 
-export async function openhumanAutocompleteHistory(params?: {
+export async function YellowAutocompleteHistory(params?: {
   limit?: number;
 }): Promise<CommandResponse<AutocompleteHistoryResult>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<AutocompleteHistoryResult>>({
-    method: 'openhuman.autocomplete_history',
+    method: 'yellow.autocomplete_history',
     params: params ?? {},
   });
 }
 
-export async function openhumanAutocompleteClearHistory(): Promise<
+export async function YellowAutocompleteClearHistory(): Promise<
   CommandResponse<AutocompleteClearHistoryResult>
 > {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<AutocompleteClearHistoryResult>>({
-    method: 'openhuman.autocomplete_clear_history',
+    method: 'yellow.autocomplete_clear_history',
   });
 }

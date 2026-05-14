@@ -30,7 +30,7 @@ export interface RestartStatus {
   reason: string;
 }
 
-export async function openhumanServiceInstall(): Promise<CommandResponse<ServiceStatus>> {
+export async function YellowServiceInstall(): Promise<CommandResponse<ServiceStatus>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -44,7 +44,7 @@ export async function openhumanServiceInstall(): Promise<CommandResponse<Service
   }
 }
 
-export async function openhumanServiceStart(): Promise<CommandResponse<ServiceStatus>> {
+export async function YellowServiceStart(): Promise<CommandResponse<ServiceStatus>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -56,7 +56,7 @@ export async function openhumanServiceStart(): Promise<CommandResponse<ServiceSt
   }
 }
 
-export async function openhumanServiceStop(): Promise<CommandResponse<ServiceStatus>> {
+export async function YellowServiceStop(): Promise<CommandResponse<ServiceStatus>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -68,7 +68,7 @@ export async function openhumanServiceStop(): Promise<CommandResponse<ServiceSta
   }
 }
 
-export async function openhumanServiceStatus(): Promise<CommandResponse<ServiceStatus>> {
+export async function YellowServiceStatus(): Promise<CommandResponse<ServiceStatus>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -82,7 +82,7 @@ export async function openhumanServiceStatus(): Promise<CommandResponse<ServiceS
   }
 }
 
-export async function openhumanServiceUninstall(): Promise<CommandResponse<ServiceStatus>> {
+export async function YellowServiceUninstall(): Promise<CommandResponse<ServiceStatus>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -96,7 +96,7 @@ export async function openhumanServiceUninstall(): Promise<CommandResponse<Servi
   }
 }
 
-export async function openhumanServiceRestart(
+export async function YellowServiceRestart(
   source?: string,
   reason?: string
 ): Promise<CommandResponse<RestartStatus>> {
@@ -109,7 +109,7 @@ export async function openhumanServiceRestart(
   });
 }
 
-export async function openhumanAgentServerStatus(): Promise<CommandResponse<AgentServerStatus>> {
+export async function YellowAgentServerStatus(): Promise<CommandResponse<AgentServerStatus>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -118,7 +118,7 @@ export async function openhumanAgentServerStatus(): Promise<CommandResponse<Agen
   });
 }
 
-export async function openhumanGetDaemonHostConfig(): Promise<CommandResponse<DaemonHostConfig>> {
+export async function YellowGetDaemonHostConfig(): Promise<CommandResponse<DaemonHostConfig>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -127,7 +127,7 @@ export async function openhumanGetDaemonHostConfig(): Promise<CommandResponse<Da
   });
 }
 
-export async function openhumanSetDaemonHostConfig(
+export async function YellowSetDaemonHostConfig(
   showTray: boolean
 ): Promise<CommandResponse<DaemonHostConfig>> {
   if (!isTauri()) {

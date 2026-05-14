@@ -71,7 +71,7 @@ export async function storeSession(token: string, user: object): Promise<void> {
   await callCoreRpc({ method: 'yellow.auth_store_session', params: { token, user } });
 }
 
-export async function openhumanEncryptSecret(plaintext: string): Promise<CommandResponse<string>> {
+export async function YellowEncryptSecret(plaintext: string): Promise<CommandResponse<string>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -81,7 +81,7 @@ export async function openhumanEncryptSecret(plaintext: string): Promise<Command
   });
 }
 
-export async function openhumanDecryptSecret(ciphertext: string): Promise<CommandResponse<string>> {
+export async function YellowDecryptSecret(ciphertext: string): Promise<CommandResponse<string>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }

@@ -56,18 +56,18 @@ export interface VoiceServerSettings {
   custom_dictionary: string[];
 }
 
-export async function openhumanVoiceStatus(): Promise<VoiceStatus> {
+export async function YellowVoiceStatus(): Promise<VoiceStatus> {
   return await callCoreRpc<VoiceStatus>({ method: 'yellow.voice_status', params: {} });
 }
 
-export async function openhumanVoiceServerStatus(): Promise<VoiceServerStatus> {
+export async function YellowVoiceServerStatus(): Promise<VoiceServerStatus> {
   return await callCoreRpc<VoiceServerStatus>({
     method: 'yellow.voice_server_status',
     params: {},
   });
 }
 
-export async function openhumanVoiceServerStart(params?: {
+export async function YellowVoiceServerStart(params?: {
   hotkey?: string;
   activation_mode?: 'tap' | 'push';
   skip_cleanup?: boolean;
@@ -78,14 +78,14 @@ export async function openhumanVoiceServerStart(params?: {
   });
 }
 
-export async function openhumanVoiceServerStop(): Promise<VoiceServerStatus> {
+export async function YellowVoiceServerStop(): Promise<VoiceServerStatus> {
   return await callCoreRpc<VoiceServerStatus>({
     method: 'yellow.voice_server_stop',
     params: {},
   });
 }
 
-export async function openhumanGetVoiceServerSettings(): Promise<
+export async function YellowGetVoiceServerSettings(): Promise<
   CommandResponse<VoiceServerSettings>
 > {
   return await callCoreRpc<CommandResponse<VoiceServerSettings>>({
@@ -94,7 +94,7 @@ export async function openhumanGetVoiceServerSettings(): Promise<
   });
 }
 
-export async function openhumanUpdateVoiceServerSettings(update: {
+export async function YellowUpdateVoiceServerSettings(update: {
   auto_start?: boolean;
   hotkey?: string;
   activation_mode?: 'tap' | 'push';
@@ -109,7 +109,7 @@ export async function openhumanUpdateVoiceServerSettings(update: {
   });
 }
 
-export async function openhumanVoiceTranscribe(
+export async function YellowVoiceTranscribe(
   audioPath: string,
   context?: string,
   skipCleanup?: boolean
@@ -120,7 +120,7 @@ export async function openhumanVoiceTranscribe(
   });
 }
 
-export async function openhumanVoiceTranscribeBytes(
+export async function YellowVoiceTranscribeBytes(
   audioBytes: number[],
   extension?: string,
   context?: string,
@@ -132,7 +132,7 @@ export async function openhumanVoiceTranscribeBytes(
   });
 }
 
-export async function openhumanVoiceTts(
+export async function YellowVoiceTts(
   text: string,
   outputPath?: string
 ): Promise<VoiceTtsResult> {

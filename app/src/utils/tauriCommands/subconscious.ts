@@ -235,7 +235,7 @@ export async function listReflections(
  * Spawn a fresh conversation thread and seed it with the reflection body
  * as the FIRST ASSISTANT message (proposed_action appended if present).
  * No LLM turn fires — the user lands in a thread that opens with the
- * observation from OpenHuman, ready for them to reply.
+ * observation from Yellow, ready for them to reply.
  *
  * Marks `acted_on_at`. Returns the new thread's id so the caller can
  * navigate the user into the new conversation. Reflections never write

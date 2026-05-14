@@ -24,7 +24,7 @@ export interface ModelSettingsUpdate {
   /**
    * When present, REPLACES `config.model_routes` wholesale with these
    * `(hint, model)` pairs. Send `[]` to clear all routes (used when switching
-   * back to the OpenHuman backend whose built-in router picks per-task models
+   * back to the Yellow backend whose built-in router picks per-task models
    * on its own). Omit to leave existing routes untouched.
    */
   model_routes?: ModelRoute[] | null;
@@ -32,7 +32,7 @@ export interface ModelSettingsUpdate {
 
 /**
  * Stepped user-facing memory-context window preset. Mirrors the core
- * `MemoryContextWindow` enum (`src/openhuman/config/schema/agent.rs`)
+ * `MemoryContextWindow` enum (`src/Yellow/config/schema/agent.rs`)
  * — the actual char budgets are owned by the core, this is the label.
  */
 export type MemoryContextWindow = 'minimal' | 'balanced' | 'extended' | 'maximum';
@@ -114,7 +114,7 @@ export interface AIPreview {
   };
 }
 
-export async function openhumanGetConfig(): Promise<CommandResponse<ConfigSnapshot>> {
+export async function YellowGetConfig(): Promise<CommandResponse<ConfigSnapshot>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -124,7 +124,7 @@ export async function openhumanGetConfig(): Promise<CommandResponse<ConfigSnapsh
 /**
  * Safe client-facing config slice. Never contains the raw api_key — only
  * `api_key_set` indicates whether a custom backend key is stored. See
- * `config.get_client_config` in `src/openhuman/config/schemas.rs`.
+ * `config.get_client_config` in `src/Yellow/config/schemas.rs`.
  */
 export interface ClientConfig {
   api_url: string | null;
@@ -133,7 +133,7 @@ export interface ClientConfig {
   api_key_set: boolean;
 }
 
-export async function openhumanGetClientConfig(): Promise<CommandResponse<ClientConfig>> {
+export async function YellowGetClientConfig(): Promise<CommandResponse<ClientConfig>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -142,7 +142,7 @@ export async function openhumanGetClientConfig(): Promise<CommandResponse<Client
   });
 }
 
-export async function openhumanUpdateModelSettings(
+export async function YellowUpdateModelSettings(
   update: ModelSettingsUpdate
 ): Promise<CommandResponse<ConfigSnapshot>> {
   if (!isTauri()) {
@@ -154,7 +154,7 @@ export async function openhumanUpdateModelSettings(
   });
 }
 
-export async function openhumanUpdateMemorySettings(
+export async function YellowUpdateMemorySettings(
   update: MemorySettingsUpdate
 ): Promise<CommandResponse<ConfigSnapshot>> {
   if (!isTauri()) {
@@ -166,7 +166,7 @@ export async function openhumanUpdateMemorySettings(
   });
 }
 
-export async function openhumanUpdateRuntimeSettings(
+export async function YellowUpdateRuntimeSettings(
   update: RuntimeSettingsUpdate
 ): Promise<CommandResponse<ConfigSnapshot>> {
   if (!isTauri()) {
@@ -178,7 +178,7 @@ export async function openhumanUpdateRuntimeSettings(
   });
 }
 
-export async function openhumanUpdateBrowserSettings(
+export async function YellowUpdateBrowserSettings(
   update: BrowserSettingsUpdate
 ): Promise<CommandResponse<ConfigSnapshot>> {
   if (!isTauri()) {
@@ -190,7 +190,7 @@ export async function openhumanUpdateBrowserSettings(
   });
 }
 
-export async function openhumanUpdateScreenIntelligenceSettings(
+export async function YellowUpdateScreenIntelligenceSettings(
   update: ScreenIntelligenceSettingsUpdate
 ): Promise<CommandResponse<ConfigSnapshot>> {
   if (!isTauri()) {
@@ -202,7 +202,7 @@ export async function openhumanUpdateScreenIntelligenceSettings(
   });
 }
 
-export async function openhumanUpdateLocalAiSettings(
+export async function YellowUpdateLocalAiSettings(
   update: LocalAiSettingsUpdate
 ): Promise<CommandResponse<ConfigSnapshot>> {
   if (!isTauri()) {
@@ -214,7 +214,7 @@ export async function openhumanUpdateLocalAiSettings(
   });
 }
 
-export async function openhumanUpdateAnalyticsSettings(update: {
+export async function YellowUpdateAnalyticsSettings(update: {
   enabled?: boolean;
 }): Promise<CommandResponse<ConfigSnapshot>> {
   if (!isTauri()) {
@@ -226,7 +226,7 @@ export async function openhumanUpdateAnalyticsSettings(update: {
   });
 }
 
-export async function openhumanGetAnalyticsSettings(): Promise<
+export async function YellowGetAnalyticsSettings(): Promise<
   CommandResponse<{ enabled: boolean }>
 > {
   if (!isTauri()) {
@@ -237,7 +237,7 @@ export async function openhumanGetAnalyticsSettings(): Promise<
   });
 }
 
-export async function openhumanUpdateMeetSettings(update: {
+export async function YellowUpdateMeetSettings(update: {
   auto_orchestrator_handoff?: boolean;
 }): Promise<CommandResponse<ConfigSnapshot>> {
   if (!isTauri()) {
@@ -249,7 +249,7 @@ export async function openhumanUpdateMeetSettings(update: {
   });
 }
 
-export async function openhumanGetMeetSettings(): Promise<
+export async function YellowGetMeetSettings(): Promise<
   CommandResponse<{ auto_orchestrator_handoff: boolean }>
 > {
   if (!isTauri()) {
@@ -270,7 +270,7 @@ export interface ComposioTriggerSettings {
   triage_disabled_toolkits: string[];
 }
 
-export async function openhumanUpdateComposioTriggerSettings(
+export async function YellowUpdateComposioTriggerSettings(
   update: ComposioTriggerSettingsUpdate
 ): Promise<CommandResponse<ConfigSnapshot>> {
   if (!isTauri()) {
@@ -282,7 +282,7 @@ export async function openhumanUpdateComposioTriggerSettings(
   });
 }
 
-export async function openhumanGetComposioTriggerSettings(): Promise<
+export async function YellowGetComposioTriggerSettings(): Promise<
   CommandResponse<ComposioTriggerSettings>
 > {
   if (!isTauri()) {
@@ -293,7 +293,7 @@ export async function openhumanGetComposioTriggerSettings(): Promise<
   });
 }
 
-export async function openhumanGetRuntimeFlags(): Promise<CommandResponse<RuntimeFlags>> {
+export async function YellowGetRuntimeFlags(): Promise<CommandResponse<RuntimeFlags>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -302,7 +302,7 @@ export async function openhumanGetRuntimeFlags(): Promise<CommandResponse<Runtim
   });
 }
 
-export async function openhumanSetBrowserAllowAll(
+export async function YellowSetBrowserAllowAll(
   enabled: boolean
 ): Promise<CommandResponse<RuntimeFlags>> {
   if (!isTauri()) {
@@ -318,7 +318,7 @@ export async function aiGetConfig(): Promise<AIPreview> {
   return {
     soul: {
       raw: '',
-      name: 'OpenHuman',
+      name: 'Yellow',
       description: 'Agent',
       personalityPreview: [],
       safetyRulesPreview: [],

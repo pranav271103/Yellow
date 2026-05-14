@@ -16,7 +16,7 @@ export interface ComposioTriggerHistoryResult {
   entries: ComposioTriggerHistoryEntry[];
 }
 
-export async function openhumanComposioListTriggerHistory(
+export async function YellowComposioListTriggerHistory(
   limit = 100
 ): Promise<CommandResponse<{ result: ComposioTriggerHistoryResult }>> {
   if (!isTauri()) {
@@ -24,7 +24,7 @@ export async function openhumanComposioListTriggerHistory(
   }
 
   return await callCoreRpc<CommandResponse<{ result: ComposioTriggerHistoryResult }>>({
-    method: 'openhuman.composio_list_trigger_history',
+    method: 'yellow.composio_list_trigger_history',
     params: { limit },
   });
 }

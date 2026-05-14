@@ -40,7 +40,7 @@ export interface WebhookDebugEvent {
   tunnel_uuid?: string | null;
 }
 
-export async function openhumanWebhooksListRegistrations(): Promise<
+export async function YellowWebhooksListRegistrations(): Promise<
   CommandResponse<{ result: { registrations: WebhookDebugRegistration[] } }>
 > {
   if (!isTauri()) {
@@ -51,7 +51,7 @@ export async function openhumanWebhooksListRegistrations(): Promise<
   >({ method: 'yellow.webhooks_list_registrations' });
 }
 
-export async function openhumanWebhooksListLogs(
+export async function YellowWebhooksListLogs(
   limit = 100
 ): Promise<CommandResponse<{ result: { logs: WebhookDebugLogEntry[] } }>> {
   if (!isTauri()) {
@@ -63,7 +63,7 @@ export async function openhumanWebhooksListLogs(
   });
 }
 
-export async function openhumanWebhooksClearLogs(): Promise<CommandResponse<{ cleared: number }>> {
+export async function YellowWebhooksClearLogs(): Promise<CommandResponse<{ cleared: number }>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -72,7 +72,7 @@ export async function openhumanWebhooksClearLogs(): Promise<CommandResponse<{ cl
   });
 }
 
-export async function openhumanWebhooksRegisterEcho(
+export async function YellowWebhooksRegisterEcho(
   tunnelUuid: string,
   tunnelName?: string,
   backendTunnelId?: string
@@ -92,7 +92,7 @@ export async function openhumanWebhooksRegisterEcho(
   });
 }
 
-export async function openhumanWebhooksUnregisterEcho(
+export async function YellowWebhooksUnregisterEcho(
   tunnelUuid: string
 ): Promise<CommandResponse<{ result: { registrations: WebhookDebugRegistration[] } }>> {
   if (!isTauri()) {

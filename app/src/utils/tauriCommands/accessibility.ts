@@ -169,153 +169,153 @@ export interface CaptureTestResult {
   timing_ms: number;
 }
 
-export async function openhumanAccessibilityStatus(): Promise<
+export async function YellowAccessibilityStatus(): Promise<
   CommandResponse<AccessibilityStatus>
 > {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<AccessibilityStatus>>({
-    method: 'openhuman.accessibility_status',
+    method: 'yellow.accessibility_status',
     serviceManaged: true,
   });
 }
 
-export async function openhumanAccessibilityRequestPermissions(): Promise<
+export async function YellowAccessibilityRequestPermissions(): Promise<
   CommandResponse<AccessibilityPermissionStatus>
 > {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<AccessibilityPermissionStatus>>({
-    method: 'openhuman.accessibility_request_permissions',
+    method: 'yellow.accessibility_request_permissions',
     serviceManaged: true,
   });
 }
 
-export async function openhumanAccessibilityRequestPermission(
+export async function YellowAccessibilityRequestPermission(
   permission: AccessibilityPermissionKind
 ): Promise<CommandResponse<AccessibilityPermissionStatus>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<AccessibilityPermissionStatus>>({
-    method: 'openhuman.accessibility_request_permission',
+    method: 'yellow.accessibility_request_permission',
     params: { permission },
     serviceManaged: true,
   });
 }
 
-export async function openhumanAccessibilityStartSession(
+export async function YellowAccessibilityStartSession(
   params: AccessibilityStartSessionParams
 ): Promise<CommandResponse<AccessibilitySessionStatus>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<AccessibilitySessionStatus>>({
-    method: 'openhuman.accessibility_start_session',
+    method: 'yellow.accessibility_start_session',
     params,
     serviceManaged: true,
   });
 }
 
-export async function openhumanAccessibilityStopSession(
+export async function YellowAccessibilityStopSession(
   params?: AccessibilityStopSessionParams
 ): Promise<CommandResponse<AccessibilitySessionStatus>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<AccessibilitySessionStatus>>({
-    method: 'openhuman.accessibility_stop_session',
+    method: 'yellow.accessibility_stop_session',
     params: params ?? {},
     serviceManaged: true,
   });
 }
 
-export async function openhumanAccessibilityCaptureNow(): Promise<
+export async function YellowAccessibilityCaptureNow(): Promise<
   CommandResponse<AccessibilityCaptureNowResult>
 > {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<AccessibilityCaptureNowResult>>({
-    method: 'openhuman.accessibility_capture_now',
+    method: 'yellow.accessibility_capture_now',
     serviceManaged: true,
   });
 }
 
-export async function openhumanAccessibilityInputAction(
+export async function YellowAccessibilityInputAction(
   params: AccessibilityInputActionParams
 ): Promise<CommandResponse<AccessibilityInputActionResult>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<AccessibilityInputActionResult>>({
-    method: 'openhuman.accessibility_input_action',
+    method: 'yellow.accessibility_input_action',
     params,
     serviceManaged: true,
   });
 }
 
-export async function openhumanAccessibilityAutocompleteSuggest(
+export async function YellowAccessibilityAutocompleteSuggest(
   params?: AccessibilityAutocompleteSuggestParams
 ): Promise<CommandResponse<AccessibilityAutocompleteSuggestResult>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<AccessibilityAutocompleteSuggestResult>>({
-    method: 'openhuman.accessibility_autocomplete_suggest',
+    method: 'yellow.accessibility_autocomplete_suggest',
     params: params ?? {},
     serviceManaged: true,
   });
 }
 
-export async function openhumanAccessibilityAutocompleteCommit(
+export async function YellowAccessibilityAutocompleteCommit(
   params: AccessibilityAutocompleteCommitParams
 ): Promise<CommandResponse<AccessibilityAutocompleteCommitResult>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<AccessibilityAutocompleteCommitResult>>({
-    method: 'openhuman.accessibility_autocomplete_commit',
+    method: 'yellow.accessibility_autocomplete_commit',
     params,
     serviceManaged: true,
   });
 }
 
-export async function openhumanAccessibilityVisionRecent(
+export async function YellowAccessibilityVisionRecent(
   limit?: number
 ): Promise<CommandResponse<AccessibilityVisionRecentResult>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<AccessibilityVisionRecentResult>>({
-    method: 'openhuman.accessibility_vision_recent',
+    method: 'yellow.accessibility_vision_recent',
     params: { limit },
     serviceManaged: true,
   });
 }
 
-export async function openhumanAccessibilityVisionFlush(): Promise<
+export async function YellowAccessibilityVisionFlush(): Promise<
   CommandResponse<AccessibilityVisionFlushResult>
 > {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<AccessibilityVisionFlushResult>>({
-    method: 'openhuman.accessibility_vision_flush',
+    method: 'yellow.accessibility_vision_flush',
     serviceManaged: true,
   });
 }
 
-export async function openhumanScreenIntelligenceCaptureTest(): Promise<
+export async function YellowScreenIntelligenceCaptureTest(): Promise<
   CommandResponse<CaptureTestResult>
 > {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
   return await callCoreRpc<CommandResponse<CaptureTestResult>>({
-    method: 'openhuman.screen_intelligence_capture_test',
+    method: 'yellow.screen_intelligence_capture_test',
     serviceManaged: true,
   });
 }
