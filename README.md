@@ -6,6 +6,15 @@
 
 <p align="center">
  <img src="https://img.shields.io/badge/status-stable-green" alt="Stable" />
+ <img src="https://img.shields.io/github/license/pranav271103/Yellow" alt="License" />
+ <img src="https://img.shields.io/github/stars/pranav271103/Yellow" alt="Stars" />
+ <img src="https://img.shields.io/github/forks/pranav271103/Yellow" alt="Forks" />
+ <img src="https://img.shields.io/github/repo-size/pranav271103/Yellow" alt="Size" />
+ <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" />
+</p>
+
+<p align="center">
+  <img src="./Yellow.png" alt="Yellow Logo" width="200" />
 </p>
 
 > **Note on Architecture**: Yellow is a custom AI platform built with a proprietary backend architecture. The user interface is based on the Yellow UI framework, while the core intelligence, inference engine, and backend services are developed independently.
