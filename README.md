@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="./YellowTitle.png" alt="Yellow" width="600" />
-</p>
+<h1 align="center" style="color: #FFD700;">Yellow</h1>
 
 <p align="center">
   <strong>Yellow is your Personal AI super intelligence. Private, Simple and extremely powerful.</strong>
