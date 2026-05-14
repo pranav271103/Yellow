@@ -1,5 +1,5 @@
 import { waitForApp, waitForAppReady } from '../helpers/app-helpers';
-import { callOpenhumanRpc } from '../helpers/core-rpc';
+import { callYellowRpc } from '../helpers/core-rpc';
 import { triggerAuthDeepLinkBypass } from '../helpers/deep-link-helpers';
 import { waitForWebView, waitForWindowVisible } from '../helpers/element-helpers';
 import { supportsExecuteScript } from '../helpers/platform';
@@ -11,7 +11,7 @@ import { clearRequestLog, getRequestLog, startMockServer, stopMockServer } from 
  * 7.1.2 (browser automation). Tracked by issue #967.
  *
  * The `browser_open` and `browser` (automation) tools live in
- * `src/openhuman/tools/impl/browser/` and are agent-internal: they are not
+ * `src/Yellow/tools/impl/browser/` and are agent-internal: they are not
  * exposed as JSON-RPC controllers, and the open path shells out to Brave on
  * the user's machine — explicitly out of bounds under the issue's "no real
  * network or shell side-effects" constraint. This spec mirrors the
@@ -20,7 +20,7 @@ import { clearRequestLog, getRequestLog, startMockServer, stopMockServer } from 
  * captures the request shape that browser-automation flows would emit when a
  * real LLM eventually drives them. The tool's own validation logic is
  * covered exhaustively by Rust unit tests in
- * `src/openhuman/tools/impl/browser/browser_open_tests.rs` and
+ * `src/Yellow/tools/impl/browser/browser_open_tests.rs` and
  * `browser_tests.rs`.
  *
  * What this spec proves end-to-end:
@@ -92,13 +92,13 @@ describe('System tools — Browser (open URL + automation registry)', () => {
     // The registry path that resolves `browser_open` lives behind
     // `agent_list_definitions`; failure to find tools_agent means the
     // browser-tool surface is unreachable from JSON-RPC.
-    const status = await callOpenhumanRpc<ServerStatus>('openhuman.agent_server_status', {});
+    const status = await callYellowRpc<ServerStatus>('Yellow.agent_server_status', {});
     stepLog('agent_server_status response', status);
     expect(status.ok).toBe(true);
     expect(status.result?.running).toBe(true);
 
-    const list = await callOpenhumanRpc<ListDefinitionsResult>(
-      'openhuman.agent_list_definitions',
+    const list = await callYellowRpc<ListDefinitionsResult>(
+      'Yellow.agent_list_definitions',
       {}
     );
     stepLog('agent_list_definitions response (count only)', {
@@ -151,8 +151,8 @@ describe('System tools — Browser (open URL + automation registry)', () => {
     // wildcard scope is present means the LLM-facing tool surface that
     // would expose this schema to a model is intact. The schema content
     // itself is unit-tested in `browser_tests.rs::browser_tool_schema_*`.
-    const list = await callOpenhumanRpc<ListDefinitionsResult>(
-      'openhuman.agent_list_definitions',
+    const list = await callYellowRpc<ListDefinitionsResult>(
+      'Yellow.agent_list_definitions',
       {}
     );
     expect(list.ok).toBe(true);
@@ -176,6 +176,6 @@ describe('System tools — Browser (open URL + automation registry)', () => {
     // requires a deterministic mock-LLM that emits structured tool_calls AND
     // a stub for the Brave open path so the test does not shell out on the
     // user's machine. The validation/allowlist path itself is covered by
-    // `src/openhuman/tools/impl/browser/browser_open_tests.rs::*`.
+    // `src/Yellow/tools/impl/browser/browser_open_tests.rs::*`.
   });
 });

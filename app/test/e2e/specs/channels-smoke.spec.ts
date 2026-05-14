@@ -11,7 +11,7 @@ import { completeOnboardingIfVisible, navigateViaHash } from '../helpers/shared-
 import { startMockServer, stopMockServer } from '../mock-server';
 
 /**
- * Smoke spec for the Channels page (first slice of tinyhumansai/openhuman#290).
+ * Smoke spec for the Channels page (first slice of tinyhumansai/Yellow#290).
  *
  * Goal: verify the Channels page boots, renders both Telegram and Discord
  * panels, and shows the "not connected" affordance (Connect button) for each.
@@ -78,7 +78,7 @@ describe('Channels page smoke (Telegram + Discord)', () => {
     await waitForText('Discord', 15_000);
 
     // Default selected channel is Telegram; its config panel shows at least
-    // one auth mode ("Login with OpenHuman" = managed_dm) with a Connect
+    // one auth mode ("Login with Yellow" = managed_dm) with a Connect
     // button. Assert the Connect affordance is present.
     expect(await textExists('Connect')).toBe(true);
 

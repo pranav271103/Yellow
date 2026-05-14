@@ -3,7 +3,7 @@
  * End-to-end: cron jobs across the full desktop stack.
  *
  * Covers the cross-process flow that unit tests cannot prove:
- *   UI (Settings → Cron Jobs panel) → coreRpcClient → Tauri core_rpc_relay → openhuman sidecar
+ *   UI (Settings → Cron Jobs panel) → coreRpcClient → Tauri core_rpc_relay → Yellow sidecar
  *
  * What this validates:
  *   1. Completing onboarding triggers the sidecar's `seed_proactive_agents`
@@ -20,12 +20,12 @@
  *      seeded morning_briefing job (UI ↔ core RPC sync).
  *
  * Method naming note: controllers register as `namespace=cron, function=list`
- * but the RPC method name is composed via `openhuman.{namespace}_{function}` —
- * so the wire method is `openhuman.cron_list`, matching what the UI's
- * `openhumanCronList` helper in app/src/utils/tauriCommands/cron.ts sends.
+ * but the RPC method name is composed via `Yellow.{namespace}_{function}` —
+ * so the wire method is `Yellow.cron_list`, matching what the UI's
+ * `YellowCronList` helper in app/src/utils/tauriCommands/cron.ts sends.
  */
 import { waitForApp, waitForAppReady } from '../helpers/app-helpers';
-import { callOpenhumanRpc } from '../helpers/core-rpc';
+import { callYellowRpc } from '../helpers/core-rpc';
 import { triggerAuthDeepLinkBypass } from '../helpers/deep-link-helpers';
 import {
   dumpAccessibilityTree,
@@ -78,7 +78,7 @@ async function waitForSeededJob(
   const deadline = Date.now() + timeoutMs;
   let lastError: unknown;
   while (Date.now() < deadline) {
-    const list = await callOpenhumanRpc('openhuman.cron_list', {});
+    const list = await callYellowRpc('Yellow.cron_list', {});
     if (list.ok) {
       const jobs = innerPayload<CronJobMinimal[]>(list.result) ?? [];
       const match = Array.isArray(jobs) ? jobs.find(j => (j?.name ?? null) === name) : undefined;
@@ -113,14 +113,14 @@ describe('Cron jobs (UI + core RPC)', () => {
     await completeOnboardingIfVisible('[CronJobsE2E]');
 
     const atHome =
-      (await textExists('Message OpenHuman')) ||
+      (await textExists('Message Yellow')) ||
       (await textExists('Good morning')) ||
       (await textExists('Upgrade to Premium'));
     expect(atHome).toBe(true);
   });
 
   it('core.ping responds over the UI JSON-RPC bridge', async () => {
-    const ping = await callOpenhumanRpc('core.ping', {});
+    const ping = await callYellowRpc('core.ping', {});
     if (!ping.ok) stepLog('core.ping failed', ping);
     expect(ping.ok).toBe(true);
   });
@@ -129,7 +129,7 @@ describe('Cron jobs (UI + core RPC)', () => {
     // seed_proactive_agents runs in a detached spawn_blocking task — poll.
     const seeded = await waitForSeededJob(MORNING_BRIEFING_NAME, 20_000);
     if (!seeded) {
-      const snapshot = await callOpenhumanRpc('openhuman.cron_list', {});
+      const snapshot = await callYellowRpc('Yellow.cron_list', {});
       stepLog('morning_briefing not found; latest cron_list snapshot', snapshot);
     }
     expect(seeded).toBeTruthy();
@@ -143,7 +143,7 @@ describe('Cron jobs (UI + core RPC)', () => {
     const originalEnabled = seeded!.enabled;
     const target = !originalEnabled;
 
-    const update = await callOpenhumanRpc('openhuman.cron_update', {
+    const update = await callYellowRpc('Yellow.cron_update', {
       job_id: seeded!.id,
       patch: { enabled: target },
     });
@@ -154,14 +154,14 @@ describe('Cron jobs (UI + core RPC)', () => {
     expect(updated?.enabled).toBe(target);
 
     // Verify persistence across a fresh list call.
-    const reread = await callOpenhumanRpc('openhuman.cron_list', {});
+    const reread = await callYellowRpc('Yellow.cron_list', {});
     expect(reread.ok).toBe(true);
     const rereadJobs = innerPayload<CronJobMinimal[]>(reread.result) ?? [];
     const after = rereadJobs.find(j => j.id === seeded!.id);
     expect(after?.enabled).toBe(target);
 
     // Restore the original state so subsequent specs/runs aren't poisoned.
-    const restore = await callOpenhumanRpc('openhuman.cron_update', {
+    const restore = await callYellowRpc('Yellow.cron_update', {
       job_id: seeded!.id,
       patch: { enabled: originalEnabled },
     });
@@ -172,7 +172,7 @@ describe('Cron jobs (UI + core RPC)', () => {
     const seeded = await waitForSeededJob(MORNING_BRIEFING_NAME, 5_000);
     expect(seeded).toBeTruthy();
 
-    const runs = await callOpenhumanRpc('openhuman.cron_runs', { job_id: seeded!.id, limit: 5 });
+    const runs = await callYellowRpc('Yellow.cron_runs', { job_id: seeded!.id, limit: 5 });
     if (!runs.ok) stepLog('cron_runs failed', runs);
     expect(runs.ok).toBe(true);
     const history = innerPayload<unknown[]>(runs.result) ?? [];
@@ -182,7 +182,7 @@ describe('Cron jobs (UI + core RPC)', () => {
   });
 
   it('cron_remove on an unknown id surfaces an error via the RPC envelope', async () => {
-    const missing = await callOpenhumanRpc('openhuman.cron_remove', {
+    const missing = await callYellowRpc('Yellow.cron_remove', {
       job_id: 'does-not-exist-e2e',
     });
     // The webview RPC envelope returns { ok:false, error } on JSON-RPC errors;

@@ -36,7 +36,7 @@ describe('Multi-round tool conversation smoke', () => {
     await browser.pause(2_500);
 
     const ok =
-      (await textExists('Message OpenHuman')) ||
+      (await textExists('Message Yellow')) ||
       (await textExists('Conversation')) ||
       (await textExists('Type a message'));
     if (!ok) {

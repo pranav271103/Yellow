@@ -18,7 +18,7 @@ import { startMockServer, stopMockServer } from '../mock-server';
  * - 13.5.2 Cache Reset (via Clear App Data flow)
  * - 13.5.3 Full State Reset
  *
- * Uses isolated OPENHUMAN_WORKSPACE (handled by e2e-run-spec.sh).
+ * Uses isolated Yellow_WORKSPACE (handled by e2e-run-spec.sh).
  */
 
 function stepLog(message: string, context?: unknown): void {

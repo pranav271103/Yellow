@@ -1,5 +1,5 @@
 import { waitForApp, waitForAppReady } from '../helpers/app-helpers';
-import { callOpenhumanRpc } from '../helpers/core-rpc';
+import { callYellowRpc } from '../helpers/core-rpc';
 import { triggerAuthDeepLinkBypass } from '../helpers/deep-link-helpers';
 import { waitForWebView, waitForWindowVisible } from '../helpers/element-helpers';
 import { supportsExecuteScript } from '../helpers/platform';
@@ -14,7 +14,7 @@ import { startMockServer, stopMockServer } from '../mock-server';
  * Tauri shell and core sidecar — store a fact, recall it via search, then
  * forget it and confirm the recall path no longer returns it.
  *
- * Driven via `callOpenhumanRpc` rather than UI navigation: the user-visible
+ * Driven via `callYellowRpc` rather than UI navigation: the user-visible
  * surface (Intelligence dashboard) is asserted in `insights-dashboard.spec.ts`.
  * Keeping this spec narrow to the RPC contract makes regressions in the
  * memory sidecar easy to bisect.
@@ -34,7 +34,7 @@ function stepLog(message: string, context?: unknown): void {
 const TEST_NAMESPACE = 'e2e-memory-roundtrip-773';
 const TEST_KEY = 'roundtrip-canary-key';
 const TEST_TITLE = 'Memory roundtrip canary';
-const TEST_CONTENT = 'OpenHuman memory roundtrip canary fact #773';
+const TEST_CONTENT = 'Yellow memory roundtrip canary fact #773';
 
 describe('Memory subsystem round-trip', () => {
   before(async function beforeSuite() {
@@ -56,14 +56,14 @@ describe('Memory subsystem round-trip', () => {
 
     // Memory subsystem must be initialised before doc_put / recall.
     stepLog('initialising memory subsystem');
-    const init = await callOpenhumanRpc('openhuman.memory_init', { jwt_token: '' });
+    const init = await callYellowRpc('Yellow.memory_init', { jwt_token: '' });
     stepLog('memory_init response', init);
     expect(init.ok).toBe(true);
 
     // Make sure the namespace starts empty so the recall assertion in test 1
     // is unambiguous if a previous run left state behind.
     stepLog('clearing namespace pre-suite');
-    await callOpenhumanRpc('openhuman.memory_clear_namespace', { namespace: TEST_NAMESPACE });
+    await callYellowRpc('Yellow.memory_clear_namespace', { namespace: TEST_NAMESPACE });
   });
 
   after(async () => {
@@ -73,7 +73,7 @@ describe('Memory subsystem round-trip', () => {
 
   it('stores a document via memory_doc_put and finds it via recall_memories', async () => {
     stepLog('storing memory');
-    const storeResult = await callOpenhumanRpc('openhuman.memory_doc_put', {
+    const storeResult = await callYellowRpc('Yellow.memory_doc_put', {
       namespace: TEST_NAMESPACE,
       key: TEST_KEY,
       title: TEST_TITLE,
@@ -83,7 +83,7 @@ describe('Memory subsystem round-trip', () => {
     expect(storeResult.ok).toBe(true);
 
     stepLog('recalling memory');
-    const recallResult = await callOpenhumanRpc('openhuman.memory_recall_memories', {
+    const recallResult = await callYellowRpc('Yellow.memory_recall_memories', {
       namespace: TEST_NAMESPACE,
       limit: 10,
     });
@@ -97,7 +97,7 @@ describe('Memory subsystem round-trip', () => {
     // Seed a fresh canary inside this test so it cannot pass vacuously when
     // run in isolation (e.g. `mocha --grep "clears a namespace"`).
     stepLog('seeding canary before clear');
-    const seed = await callOpenhumanRpc('openhuman.memory_doc_put', {
+    const seed = await callYellowRpc('Yellow.memory_doc_put', {
       namespace: TEST_NAMESPACE,
       key: TEST_KEY,
       title: TEST_TITLE,
@@ -106,7 +106,7 @@ describe('Memory subsystem round-trip', () => {
     expect(seed.ok).toBe(true);
 
     // Sanity: canary is recallable before the clear.
-    const preClear = await callOpenhumanRpc('openhuman.memory_recall_memories', {
+    const preClear = await callYellowRpc('Yellow.memory_recall_memories', {
       namespace: TEST_NAMESPACE,
       limit: 10,
     });
@@ -114,14 +114,14 @@ describe('Memory subsystem round-trip', () => {
     expect(JSON.stringify(preClear.result ?? {}).includes(TEST_KEY)).toBe(true);
 
     stepLog('clearing namespace');
-    const forgetResult = await callOpenhumanRpc('openhuman.memory_clear_namespace', {
+    const forgetResult = await callYellowRpc('Yellow.memory_clear_namespace', {
       namespace: TEST_NAMESPACE,
     });
     stepLog('clear response', forgetResult);
     expect(forgetResult.ok).toBe(true);
 
     stepLog('recalling after clear — must miss');
-    const recallAfterForget = await callOpenhumanRpc('openhuman.memory_recall_memories', {
+    const recallAfterForget = await callYellowRpc('Yellow.memory_recall_memories', {
       namespace: TEST_NAMESPACE,
       limit: 10,
     });

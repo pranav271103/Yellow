@@ -11,7 +11,7 @@
  * in agent integration tests when the mock/backend can return structured tool_calls.
  */
 import { waitForApp, waitForAppReady } from '../helpers/app-helpers';
-import { callOpenhumanRpc } from '../helpers/core-rpc';
+import { callYellowRpc } from '../helpers/core-rpc';
 import { triggerAuthDeepLinkBypass } from '../helpers/deep-link-helpers';
 import {
   dumpAccessibilityTree,
@@ -58,14 +58,14 @@ describe('Skill execution (UI + core RPC)', () => {
     await waitForAppReady(15_000);
     await completeOnboardingIfVisible('[SkillExecutionE2E]');
     const atHome =
-      (await textExists('Message OpenHuman')) ||
+      (await textExists('Message Yellow')) ||
       (await textExists('Good morning')) ||
       (await textExists('Upgrade to Premium'));
     expect(atHome).toBe(true);
   });
 
   it('core.ping responds over the same JSON-RPC URL as the UI', async () => {
-    const ping = await callOpenhumanRpc('core.ping', {});
+    const ping = await callYellowRpc('core.ping', {});
     if (!ping.ok) {
       stepLog('core.ping failed', ping);
     }
@@ -73,7 +73,7 @@ describe('Skill execution (UI + core RPC)', () => {
   });
 
   it('runs start → list_tools → call_tool → stop for the seeded echo skill', async () => {
-    const start = await callOpenhumanRpc('openhuman.skills_start', {
+    const start = await callYellowRpc('Yellow.skills_start', {
       skill_id: E2E_RUNTIME_SKILL_ID,
     });
     if (!start.ok) {
@@ -86,14 +86,14 @@ describe('Skill execution (UI + core RPC)', () => {
 
     await browser.pause(800);
 
-    const tools = await callOpenhumanRpc('openhuman.skills_list_tools', {
+    const tools = await callYellowRpc('Yellow.skills_list_tools', {
       skill_id: E2E_RUNTIME_SKILL_ID,
     });
     expect(tools.ok).toBe(true);
     const toolNames = (tools.result?.tools || []).map((t: { name?: string }) => t.name);
     expect(toolNames.includes('echo')).toBe(true);
 
-    const call = await callOpenhumanRpc('openhuman.skills_call_tool', {
+    const call = await callYellowRpc('Yellow.skills_call_tool', {
       skill_id: E2E_RUNTIME_SKILL_ID,
       tool_name: 'echo',
       arguments: { message: 'hello from e2e skill execution' },
@@ -106,7 +106,7 @@ describe('Skill execution (UI + core RPC)', () => {
     );
     expect(echoed).toBe(true);
 
-    const stop = await callOpenhumanRpc('openhuman.skills_stop', {
+    const stop = await callYellowRpc('Yellow.skills_stop', {
       skill_id: E2E_RUNTIME_SKILL_ID,
     });
     expect(stop.ok).toBe(true);
@@ -115,19 +115,19 @@ describe('Skill execution (UI + core RPC)', () => {
 
   it('skills_set_setup_complete + skills_status without start (OAuth persistence path)', async () => {
     try {
-      const set = await callOpenhumanRpc('openhuman.skills_set_setup_complete', {
+      const set = await callYellowRpc('Yellow.skills_set_setup_complete', {
         skill_id: E2E_RUNTIME_SKILL_ID,
         complete: true,
       });
       expect(set.ok).toBe(true);
 
-      const st = await callOpenhumanRpc('openhuman.skills_status', {
+      const st = await callYellowRpc('Yellow.skills_status', {
         skill_id: E2E_RUNTIME_SKILL_ID,
       });
       expect(st.ok).toBe(true);
       expect(st.result?.setup_complete === true).toBe(true);
     } finally {
-      await callOpenhumanRpc('openhuman.skills_set_setup_complete', {
+      await callYellowRpc('Yellow.skills_set_setup_complete', {
         skill_id: E2E_RUNTIME_SKILL_ID,
         complete: false,
       });

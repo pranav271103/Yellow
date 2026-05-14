@@ -36,7 +36,7 @@ describe('Socket reconnect skill sync smoke', () => {
     home = await waitForHomePage(15_000);
 
     const ok =
-      home || (await textExists('Message OpenHuman')) || (await textExists('Upgrade to Premium'));
+      home || (await textExists('Message Yellow')) || (await textExists('Upgrade to Premium'));
     expect(ok).toBeTruthy();
   });
 });

@@ -209,7 +209,7 @@ describe('Rewards progression & persistence', () => {
     // per phase).
     const rewardsRequestCount = await browser.execute(async () => {
       const apiBase =
-        (window as unknown as { __OPENHUMAN_API_BASE__?: string }).__OPENHUMAN_API_BASE__ ??
+        (window as unknown as { __Yellow_API_BASE__?: string }).__Yellow_API_BASE__ ??
         'http://127.0.0.1:18473';
       const res = await fetch(`${apiBase}/__admin/requests`);
       const json = (await res.json()) as { data?: Array<{ method: string; url: string }> };
