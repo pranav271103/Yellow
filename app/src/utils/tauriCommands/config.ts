@@ -32,7 +32,7 @@ export interface ModelSettingsUpdate {
 
 /**
  * Stepped user-facing memory-context window preset. Mirrors the core
- * `MemoryContextWindow` enum (`src/Yellow/config/schema/agent.rs`)
+ * `MemoryContextWindow` enum (`src/yellow/config/schema/agent.rs`)
  * — the actual char budgets are owned by the core, this is the label.
  */
 export type MemoryContextWindow = 'minimal' | 'balanced' | 'extended' | 'maximum';
@@ -114,7 +114,7 @@ export interface AIPreview {
   };
 }
 
-export async function YellowGetConfig(): Promise<CommandResponse<ConfigSnapshot>> {
+export async function yellowGetConfig(): Promise<CommandResponse<ConfigSnapshot>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -124,7 +124,7 @@ export async function YellowGetConfig(): Promise<CommandResponse<ConfigSnapshot>
 /**
  * Safe client-facing config slice. Never contains the raw api_key — only
  * `api_key_set` indicates whether a custom backend key is stored. See
- * `config.get_client_config` in `src/Yellow/config/schemas.rs`.
+ * `config.get_client_config` in `src/yellow/config/schemas.rs`.
  */
 export interface ClientConfig {
   api_url: string | null;
@@ -133,7 +133,7 @@ export interface ClientConfig {
   api_key_set: boolean;
 }
 
-export async function YellowGetClientConfig(): Promise<CommandResponse<ClientConfig>> {
+export async function yellowGetClientConfig(): Promise<CommandResponse<ClientConfig>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -142,7 +142,7 @@ export async function YellowGetClientConfig(): Promise<CommandResponse<ClientCon
   });
 }
 
-export async function YellowUpdateModelSettings(
+export async function yellowUpdateModelSettings(
   update: ModelSettingsUpdate
 ): Promise<CommandResponse<ConfigSnapshot>> {
   if (!isTauri()) {
@@ -154,7 +154,7 @@ export async function YellowUpdateModelSettings(
   });
 }
 
-export async function YellowUpdateMemorySettings(
+export async function yellowUpdateMemorySettings(
   update: MemorySettingsUpdate
 ): Promise<CommandResponse<ConfigSnapshot>> {
   if (!isTauri()) {
@@ -166,7 +166,7 @@ export async function YellowUpdateMemorySettings(
   });
 }
 
-export async function YellowUpdateRuntimeSettings(
+export async function yellowUpdateRuntimeSettings(
   update: RuntimeSettingsUpdate
 ): Promise<CommandResponse<ConfigSnapshot>> {
   if (!isTauri()) {
@@ -178,7 +178,7 @@ export async function YellowUpdateRuntimeSettings(
   });
 }
 
-export async function YellowUpdateBrowserSettings(
+export async function yellowUpdateBrowserSettings(
   update: BrowserSettingsUpdate
 ): Promise<CommandResponse<ConfigSnapshot>> {
   if (!isTauri()) {
@@ -190,7 +190,7 @@ export async function YellowUpdateBrowserSettings(
   });
 }
 
-export async function YellowUpdateScreenIntelligenceSettings(
+export async function yellowUpdateScreenIntelligenceSettings(
   update: ScreenIntelligenceSettingsUpdate
 ): Promise<CommandResponse<ConfigSnapshot>> {
   if (!isTauri()) {
@@ -202,7 +202,7 @@ export async function YellowUpdateScreenIntelligenceSettings(
   });
 }
 
-export async function YellowUpdateLocalAiSettings(
+export async function yellowUpdateLocalAiSettings(
   update: LocalAiSettingsUpdate
 ): Promise<CommandResponse<ConfigSnapshot>> {
   if (!isTauri()) {
@@ -214,7 +214,7 @@ export async function YellowUpdateLocalAiSettings(
   });
 }
 
-export async function YellowUpdateAnalyticsSettings(update: {
+export async function yellowUpdateAnalyticsSettings(update: {
   enabled?: boolean;
 }): Promise<CommandResponse<ConfigSnapshot>> {
   if (!isTauri()) {
@@ -226,7 +226,7 @@ export async function YellowUpdateAnalyticsSettings(update: {
   });
 }
 
-export async function YellowGetAnalyticsSettings(): Promise<
+export async function yellowGetAnalyticsSettings(): Promise<
   CommandResponse<{ enabled: boolean }>
 > {
   if (!isTauri()) {
@@ -237,7 +237,7 @@ export async function YellowGetAnalyticsSettings(): Promise<
   });
 }
 
-export async function YellowUpdateMeetSettings(update: {
+export async function yellowUpdateMeetSettings(update: {
   auto_orchestrator_handoff?: boolean;
 }): Promise<CommandResponse<ConfigSnapshot>> {
   if (!isTauri()) {
@@ -249,7 +249,7 @@ export async function YellowUpdateMeetSettings(update: {
   });
 }
 
-export async function YellowGetMeetSettings(): Promise<
+export async function yellowGetMeetSettings(): Promise<
   CommandResponse<{ auto_orchestrator_handoff: boolean }>
 > {
   if (!isTauri()) {
@@ -270,7 +270,7 @@ export interface ComposioTriggerSettings {
   triage_disabled_toolkits: string[];
 }
 
-export async function YellowUpdateComposioTriggerSettings(
+export async function yellowUpdateComposioTriggerSettings(
   update: ComposioTriggerSettingsUpdate
 ): Promise<CommandResponse<ConfigSnapshot>> {
   if (!isTauri()) {
@@ -282,7 +282,7 @@ export async function YellowUpdateComposioTriggerSettings(
   });
 }
 
-export async function YellowGetComposioTriggerSettings(): Promise<
+export async function yellowGetComposioTriggerSettings(): Promise<
   CommandResponse<ComposioTriggerSettings>
 > {
   if (!isTauri()) {
@@ -293,7 +293,7 @@ export async function YellowGetComposioTriggerSettings(): Promise<
   });
 }
 
-export async function YellowGetRuntimeFlags(): Promise<CommandResponse<RuntimeFlags>> {
+export async function yellowGetRuntimeFlags(): Promise<CommandResponse<RuntimeFlags>> {
   if (!isTauri()) {
     throw new Error('Not running in Tauri');
   }
@@ -302,7 +302,7 @@ export async function YellowGetRuntimeFlags(): Promise<CommandResponse<RuntimeFl
   });
 }
 
-export async function YellowSetBrowserAllowAll(
+export async function yellowSetBrowserAllowAll(
   enabled: boolean
 ): Promise<CommandResponse<RuntimeFlags>> {
   if (!isTauri()) {
