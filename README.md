@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <img src="./Yellow.png" alt="Yellow Logo" width="1000"/>
+  <img src="./YellowTitle.png" alt="Yellow Logo" width="1000"/>
 </p>
 
 > **Note on Architecture**: Yellow is a custom AI platform built with a proprietary backend architecture. The user interface is based on the Yellow UI framework, while the core intelligence, inference engine, and backend services are developed independently.
